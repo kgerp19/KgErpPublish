@@ -1,0 +1,415 @@
+﻿@model KGERP.ViewModel.KgReCrmViewModel
+
+
+
+@{
+    ViewData["Title"] = "Add New Client";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    
+
+}
+
+
+<style type="text/css">
+
+    input, select, textarea {
+        max-width: 100%;
+    }
+</style>
+
+<section class="content-header">
+    <h1>
+        Create New Client
+
+    </h1>
+    <ol class="breadcrumb">
+        <li><a href="~/Home/Index"><i class="fa fa-dashboard"></i>Dashboard</a></li>
+        <li class="active"> Client List </li>
+    </ol>
+</section>
+@using (Html.BeginForm())
+{
+   
+
+    if (Model._KgReCrmModel.ClientId > 0)
+    {
+        @*@Html.HiddenFor(model => model._KgReCrmModel.ResponsibleOfficer)*@
+        <script type="text/javascript">
+                $(document).ready(function () {
+                    $("#ddlProject option:selected").text(model._KgReCrmModel.ProjectName);
+                    // Modified =================
+                    var pp = "";
+                    @*var data = "@model.KGRECustomers.Remarks";*@
+                var productId = $('.papi').closest("tr").find("td").eq(0).text();
+                    //console.log(obj);str.replace(')', ') <br>');
+                    pp = productId.split("*");
+                    $("#splistring").text(pp.join("\n #"));
+
+                    //Old.=================
+                    $("#pnlClientBasicInfo").show();
+                    //$("#pnlClientCreateOrEdit").hide();
+                    $("#pnlClientAddComment").show();
+                    $("#pnlClientAddAttachment").show();
+                    $("#pnlClientHistory").show();
+                    $("#AfterClientActivity").show();
+                    $("#pnlServiceHistory").show();
+                    $("#ClientAttachmentId").hide();
+                });
+
+                function ValidateEndDate() {
+                    // alert('Data')
+                    // $("#pnlClientCreateOrEdit").show();
+
+                    if (document.getElementById("pnlClientCreateOrEdit").style.display == "none") {
+                        document.getElementById("pnlClientCreateOrEdit").style.display = "block";
+
+                    }
+                    else {
+                        document.getElementById("pnlClientCreateOrEdit").style.display = "none";
+                    }
+                }
+        </script>
+    }
+    else
+    {
+        <script type="text/javascript">
+            $(document).ready(function () {
+                $("#pnlClientBasicInfo").hide();
+                $("#pnlClientAddComment").hide();
+                $("#pnlClientAddAttachment").hide();
+                $("#pnlClientHistory").hide();
+                $("#AfterClientActivity").hide();
+                $("#pnlServiceHistory").hide();
+                $("#ClientAttachmentId").hide();
+                document.getElementById("pnlClientCreateOrEdit").style.display = "block";
+            });
+
+        </script>
+    }
+    <section class="content">
+        <div class="box">
+
+            @Html.AntiForgeryToken()
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            @Html.HiddenFor(model => model._KgReCrmModel.ClientId)
+
+            <div class="box-danger">
+
+                <div class="box-body">
+                    <div class="row">
+                        <h4 class="bg-gray-light" style="padding:10px">
+                            Client - Personal Information
+                        </h4>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-3">
+
+                            <div class="form-group">
+                                <label>Name (English)</label>
+                                @Html.EditorFor(model => model._KgReCrmModel.FullName, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model._KgReCrmModel.FullName, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <div class="form-group">
+                                <label>Gender</label>
+                                @Html.DropDownListFor(model => model._KgReCrmModel.Gender, new SelectList(Model.Genders, "Text", "Text"), "---Select---", new { @class = "dropdownsize form-control" })
+                                @Html.ValidationMessageFor(model => model._KgReCrmModel.Gender, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <div class="form-group">
+                                <label>Religion</label>
+                                @Html.DropDownListFor(model => model._KgReCrmModel.ReligionId, new SelectList(Model.Religions, "Value", "Text"), "---Select---", new { @class = "dropdownsize form-control" })
+                                @Html.ValidationMessageFor(model => model._KgReCrmModel.ReligionId, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label>Mobile No 1</label>
+                                @Html.EditorFor(model => model._KgReCrmModel.MobileNo, new { htmlAttributes = new { @class = "form-control", @id = "mobileNo", @autocomplete = "off" } })
+                                @Html.ValidationMessageFor(model => model._KgReCrmModel.MobileNo, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+
+                            <div class="form-group">
+                                <label>Mobile No 2</label>
+                                @Html.EditorFor(model => model._KgReCrmModel.MobileNo2, new { htmlAttributes = new { @class = "form-control", @id = "mobileNo2", @autocomplete = "off" } })
+                                @Html.ValidationMessageFor(model => model._KgReCrmModel.MobileNo2, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label>Email 1</label>
+                                @Html.EditorFor(model => model._KgReCrmModel.Email, new { htmlAttributes = new { @class = "form-control", @id = "emailId" } })
+                                @Html.ValidationMessageFor(model => model._KgReCrmModel.Email, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <div class="form-group">
+                                <label>Email 2</label>
+                                @Html.EditorFor(model => model._KgReCrmModel.Email1, new { htmlAttributes = new { @class = "form-control", @id = "email2Id" } })
+                                @Html.ValidationMessageFor(model => model._KgReCrmModel.Email1, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+
+                        <div class="col-md-2">
+                            <div class="form-group">
+                                <label>Job Title</label>
+                                @Html.EditorFor(model => model._KgReCrmModel.Designation, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model._KgReCrmModel.Designation, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label>Organization</label>
+                                @Html.EditorFor(model => model._KgReCrmModel.DepartmentOrInstitution, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model._KgReCrmModel.DepartmentOrInstitution, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <div class="form-group">
+                                <label>Date of Birth</label>
+                                @Html.EditorFor(model => model._KgReCrmModel.DateofBirth, new { htmlAttributes = new { @class = "datepicker", @style = "width:80%", @autocomplete = "off" } })
+                                @Html.ValidationMessageFor(model => model._KgReCrmModel.DateofBirth, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Present Address</label>
+                                @Html.TextAreaFor(model => model._KgReCrmModel.PresentAddress, new { id = "txtPresentAddress", placeholder = "Remarks", @class = "form-control", rows = 2 })
+                                @Html.ValidationMessageFor(model => model._KgReCrmModel.PresentAddress, "", new { @class = "text-danger" })
+
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Permanent Address</label>
+                                @Html.TextAreaFor(model => model._KgReCrmModel.PermanentAddress, new { id = "txtPermanentAddress", placeholder = "Permanent Address", @class = "form-control", rows = 2 })
+                                @Html.ValidationMessageFor(model => model._KgReCrmModel.PermanentAddress, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+
+
+                    </div>
+
+                </div>
+                <div class="box-footer">
+                    <div class="row">
+                        <div class="col-md-3">
+                          
+                        </div>
+
+
+                        <div class="col-lg-4 col-md-4">
+                            <button type="submit" id="poCreateBtn" class="btn btn-primary btn-block">
+                                <i class='fa fa-plus'></i>
+                                <span>Create New Client</span>
+                            </button>
+
+
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+    </section>
+
+}
+
+
+
+
+
+@*<div>
+        @Html.ActionLink("Back to List", "Index")
+    </div>*@
+
+
+@if (TempData["errMessage"] != null)
+{
+    if (TempData["errMessage"].ToString() == "Exists")
+    {
+        <script type="text/javascript">
+            window.onload = function () {
+                alert("This Client No Already Exists");
+            };
+        </script>
+    }
+    else
+    {
+        <script type="text/javascript">
+            window.onload = function () {
+                alert("Please input Mobile/Email");
+            };
+        </script>
+    }
+}
+
+
+@if (TempData["DataSave"] != null)
+{
+    <script type="text/javascript">
+        window.onload = function () {
+            alert("Data Save Successfully!");
+        };
+    </script>
+}
+<script>
+    $("#ddlProject").on("change", function () {
+        $("#hdnProjectName").val($(this).find("option:selected").text());
+        //$("#hdnProjectId").val($(this).find("option:selected").val());
+    });
+</script>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryui")
+    @Styles.Render("~/Content/cssjqryUi")
+
+    <script>
+
+    $("#mobileNo").blur(function () {
+
+        var mobileNo = $('#mobileNo').val();
+
+        if (mobileNo == null || mobileNo.trim() === '') {
+            return;
+        }
+           $.ajax({
+               type: "GET",
+                    url: "@Url.Action("CheckMobileNo", "KGRECRM")",
+                    datatype: "Json",
+               data: {
+                   mobileNo: mobileNo
+               },
+               success: function (data) {
+
+                   if (data) {
+                       alert(data);
+                   }
+                   else {
+                       return;
+                   }
+               }
+            });
+    });
+         $("#mobileNo2").blur(function () {
+
+        var mobileNo = $('#mobileNo2').val();
+
+        if (mobileNo == null || mobileNo.trim() === '') {
+            return;
+        }
+           $.ajax({
+               type: "GET",
+                    url: "@Url.Action("CheckMobileNo", "KGRECRM")",
+                    datatype: "Json",
+               data: {
+                   mobileNo: mobileNo
+               },
+               success: function (data) {
+
+                   if (data) {
+                       alert(data);
+                   }
+                   else {
+                       return;
+                   }
+               }
+            });
+    });
+
+    </script>
+    <style type="text/css">
+        input, select, textarea {
+            max-width: 100%;
+        }
+
+        .text-on-pannel {
+            background: #fff none repeat scroll 0 0;
+            height: auto;
+            margin-left: 20px;
+            padding: 3px 5px;
+            position: absolute;
+            margin-top: -47px;
+            border: 1px solid #337ab7;
+            border-radius: 8px;
+        }
+
+        .panel {
+            /* for text on pannel */
+            margin-top: 27px !important;
+        }
+
+        .panel-body {
+            padding-top: 30px !important;
+        }
+
+        .spacing-table {
+            font-family: 'Helvetica', 'Arial', sans-serif;
+            font-size: 12px;
+            border-collapse: separate;
+            border-spacing: 0 5px; /* this is the ultimate fix */
+            width: 100%;
+        }
+
+            .spacing-table th {
+                text-align: left;
+                padding: 5px 5px;
+            }
+
+            .spacing-table td {
+                border-width: 3px 0;
+                /* border-color: darkred;
+                border-style: solid;*/
+                background-color: #f1f1f1;
+                color: Black;
+                padding: 5px 5px;
+            }
+
+                .spacing-table td:first-child {
+                    /*  border-left-width: 3px;*/
+                    border-radius: 5px 0 0 5px;
+                }
+
+                .spacing-table td:last-child {
+                    /*border-right-width: 3px;*/
+                    border-radius: 0 5px 5px 0;
+                }
+
+        .image {
+            float: left;
+            max-height: 50px;
+            max-width: 50px;
+            margin-right: 10px;
+        }
+
+        .name {
+            margin: 0;
+            padding: 0;
+        }
+
+        .username {
+            display: block;
+            font-weight: bold;
+            margin-bottom: 1em;
+        }
+
+        .ui-autocomplete {
+            max-height: 320px;
+            overflow: auto;
+        }
+    </style>
+
+
+}

@@ -1,0 +1,237 @@
+﻿@model KGERP.Service.ServiceModel.RealState.MoneyReceiptViewModel
+@using KGERP.Utility;
+@{
+    ViewBag.Title = "Create";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<style>
+    .bg-w {
+        margin-right: -15px;
+        margin-left: -15px;
+        background: #b0e9b2;
+        padding: 4px 0px;
+        margin-bottom: 14px;
+        font-weight: 900;
+    }
+
+    .form-control.input-validation-error:focus {
+        border-color: red !important;
+    }
+
+    .chosen-container-multi .chosen-choices li.search-field input[type=text] {
+        margin: 1px 0;
+        padding: 0;
+        height: 39px;
+        outline: 0;
+        border: 0 !important;
+        background: transparent !important;
+        box-shadow: none;
+        color: #999;
+        font-size: 100%;
+        font-family: sans-serif;
+        line-height: normal;
+        border-radius: 0;
+    }
+
+    .box {
+        position: relative;
+        border-radius: 3px;
+        background: #ffffff;
+        border-top: 3px solid #ffffff;
+        margin-bottom: 20px;
+        width: 100%;
+        box-shadow: 0 1px 1px rgb(0 0 0 / 10%);
+    }
+
+    .skin-blue .content-header {
+        background: #ccffce;
+    }
+
+    .content-header {
+        position: relative;
+        padding: 15px 15px 15px 15px;
+    }
+</style>
+
+<section style="margin-bottom:20px;font-size:25px">
+    <h3 class="bg-w" style="padding-left:5px"><b> @Model.CompanyName - Bill Collaction  </b> </h3>
+</section>
+
+
+@using (Html.BeginForm("Create", "MoneyReceipt", FormMethod.Post))
+{
+    <div class="card">
+        <div class="card-body">
+            <div class="row">
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label>Money Receipt Date</label>
+                        <div style="display:flex">
+                            <input name="TransactionDateString" required value="@Model.ReceiptDateString" required class="form-control datepickeronPage" id="TransactionDateString" placeholder="--- Select Date ---" autocomplete="off">
+                            @Html.ValidationMessageFor(model => model.ReceiptDateString, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label for="ClientName" class="col-form-label">Client Name</label>
+                        <input type="hidden" name="ClientId" id="ClientId" />
+                        @Html.TextBoxFor(model => model.ClientName, new { id = "txtClientName", @class = "form-control", placeholder = "Client Name", required = "required" })
+                        @Html.ValidationMessageFor(model => model.ClientName, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="ClientName" class="col-form-label">Received With Thanks From Mr./Mrs</label>
+                        <input type="hidden" name="ClientId" id="ClientId" />
+                        @Html.TextBoxFor(model => model.ReceivedBy, new { id = "txtReceivedBy", @class = "form-control", placeholder = "Received By", required = "required", style = "max-width:100%" })
+                        @Html.ValidationMessageFor(model => model.ReceivedBy, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label>Select Pay Type</label>
+                        @Html.DropDownListFor(model => model.PayTypeId, new SelectList(Model.PayType, "Value", "Text"), "==Select PayType==", new { id = "ddlPayTypeId", @class = "form-control  ddlReset", @required = "required", @style = "width:100%" })
+                        @Html.ValidationMessageFor(model => model.PayTypeId, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label>Select Bank</label>
+                        @Html.DropDownListFor(model => model.BankName, new SelectList(Model.BankList, "Value", "Text"), "==Select Bank==", new { id = "ddlBank", @class = "form-control  ddlReset", @required = "required", @style = "width:100%" })
+                        @Html.ValidationMessageFor(model => model.BankName, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label for="ChequeNo" class="col-form-label">ChequeNo</label>
+                        @Html.TextBoxFor(model => model.ChequeNo, new { id = "txtChequeNo", @class = "form-control", placeholder = "Cheque No", required = "required", style = "max-width:100%" })
+                        @Html.ValidationMessageFor(model => model.ChequeNo, "", new { @class = "text-danger" })
+                    </div>
+                </div>   
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label for="ChequeNo" class="col-form-label">Account No</label>
+                        @Html.TextBoxFor(model => model.AccountNo, new { id = "txtAccountNo", @class = "form-control", placeholder = "Account No", required = "required", style = "max-width:100%" })
+                        @Html.ValidationMessageFor(model => model.AccountNo, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="col-md-5">
+                    <div class="form-group">
+                        <label for="Particular" class="col-form-label">Particular</label>                  
+                        @Html.TextBoxFor(model => model.Particular, new { id = "txtParticular", @class = "form-control", placeholder = "Particular", required = "required", style = "max-width:100%" })
+                        @Html.ValidationMessageFor(model => model.Particular, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="select2-purple">
+                        <label for="Against" class="col-form-label"> Select Against</label>
+                        <select id="AgainstId" name="Against" class="form-control " multiple="multiple" data-placeholder="Select Item" data-dropdown-css-class="select2-purple" required style="max-width: 100%;">
+                            @foreach (var item in Model.MemMoneyReceiptType)
+                            {
+                                <option value="@item.Text"> @item.Text</option>
+                            }
+                        </select>
+                        @Html.ValidationMessageFor(model => model.Against, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label for="ChequeNo" class="col-form-label">Amount</label>
+                        @Html.TextBoxFor(model => model.Amount, new { id = "txtAmount", @class = "form-control", placeholder = "Cheque No", required = "required", style = "max-width:100%" })
+                        @Html.ValidationMessageFor(model => model.Amount, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+            </div>
+            <div class="row" style="margin-top:20px">
+                <div class="col-sm-5"></div>
+                <div class="col-sm-2">
+                    <input type="submit" value="Submit" class="btn btn-primary" />
+                </div>
+                <div class="col-sm-5"></div>
+            </div>
+         
+        </div>
+    </div>
+}
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryui")
+    @Styles.Render("~/Content/cssjqryUi")
+
+    <script>
+
+        $(document).ready(function () {
+
+                $('.datepickeronPage').datepicker({
+                    dateFormat: 'dd-M-yy',
+                    showOn: 'both',
+                    buttonText: "<i class='fa fa-calendar'></i>",
+                    changeMonth: true,
+                    changeYear: true,
+                    yearRange: "1950:+150"
+                });
+            $('.select2').select2()
+        });
+
+        $('#AgainstId').chosen({
+            allow_single_deselect: true
+            //, width: "95%"
+        });
+            $(function () {
+                $("#txtClientName").autocomplete({
+                    source: function (request, response) {
+                        $.ajax({
+                            url: '/ProductBooking/GetBookingList/',
+                            data: "{ 'prefix': '" + request.term + "','companyId': '" + @Model.CompanyId + "'}",
+                            dataType: "json",
+                            type: "POST",
+                            contentType: "application/json; charset=utf-8",
+                            success: function (data) {
+                                response($.map(data, function (item) {
+                                    return item;
+                                }))
+                            },
+                            error: function (response) {
+                                alert(response.responseText);
+                            },
+                            failure: function (response) {
+                                alert(response.responseText);
+                            }
+                        });
+                    },
+                    select: function (e, i) {
+                        $("#ClientId").val(i.item.val);
+                                            $.ajax({
+                        type: "GET",
+                        url: "@Url.Action("GetClient", "MoneyReceipt")",
+                        datatype: "Json",
+                        data: { companyId: "@Model.CompanyId", clientId: i.item.val },
+                        success: function (data) {
+                            if (data) {
+                                console.log("hhhh", data);
+                                $("#txtReceivedBy").val(data.FullName);
+                            }
+                        }
+                    });
+                    },
+
+                }).focus(function () {
+                    $(this).autocomplete("search");
+                });
+            });
+
+
+    </script>
+}
