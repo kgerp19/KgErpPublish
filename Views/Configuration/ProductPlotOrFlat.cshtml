@@ -7,7 +7,7 @@
 Model.CompanyId == (int)CompanyName.KrishibidPropertiesLimited ? "Flat" : "";
     ViewData["Title"] = $"{ProductType}'s List";
     Layout = "~/Views/Shared/_Layout.cshtml";
-
+    string textfor = "";
 
 }
 @model KGERP.Service.Configuration.VMrealStateProductsForList
@@ -26,7 +26,7 @@ Model.CompanyId == (int)CompanyName.KrishibidPropertiesLimited ? "Flat" : "";
     }
 
     input[type="search"]:focus {
-        outline: thick solid  #32a1ce!important;
+        outline: thick solid #32a1ce !important;
     }
 </style>
 <section class="content-header">
@@ -67,7 +67,7 @@ Model.CompanyId == (int)CompanyName.KrishibidPropertiesLimited ? "Flat" : "";
                                                     <th>Size (Unit)</th>
                                                     <th>Road No</th>
                                                     <th>Land Facing</th>
-
+                                                    <th>Status</th>
                                                     <th>Action</th>
                                                 </tr>
                                             }
@@ -80,6 +80,7 @@ Model.CompanyId == (int)CompanyName.KrishibidPropertiesLimited ? "Flat" : "";
                                                     <th>Size (Unit)</th>
                                                     <th>Flat Type</th>
                                                     <th>Flat Facing</th>
+                                                    <th>Status</th>
                                                     <th>Action</th>
                                                 </tr>
                                             }
@@ -104,8 +105,22 @@ Model.CompanyId == (int)CompanyName.KrishibidPropertiesLimited ? "Flat" : "";
 
                                                                 if (item.FlatProp.IsDuplex)
                                                                 {
+                                                               <span> Duplex Floors</span>
 
-                                                                    <p>Duplex Floors: @string.Join(", ", @item.FlatProp.Floors) </p>
+                                                                    @*if (item.GetList != null)
+                                                                    {
+                                                                        textfor = "";
+
+                                                                        foreach (var item2 in item.GetList)
+                                                                        {
+                                                                            if (item.FlatProp.Floors.Where(e => e == item2.Value.ToString()).Count() > 0)
+                                                                            {
+                                                                                textfor = textfor + item2.Text;
+                                                                            }
+                                                                        }
+
+                                                                       <span>Duplex Floors : @textfor </span>
+                                                                    }*@
                                                                 }
                                                                 else
                                                                 {
@@ -113,7 +128,7 @@ Model.CompanyId == (int)CompanyName.KrishibidPropertiesLimited ? "Flat" : "";
                                                                 }
 
                                                             }
-                                                            @if (Model.CompanyId == (int)CompanyName.KrishibidPropertiesLimited)
+                                                            @if (Model.CompanyId == (int)CompanyName.GloriousLandsAndDevelopmentsLimited)
                                                             {
 
                                                                 <p>@item.PlotProp.RoadNo</p>
@@ -121,6 +136,22 @@ Model.CompanyId == (int)CompanyName.KrishibidPropertiesLimited ? "Flat" : "";
                                                             }
                                                         </td>
                                                         <td> @item.FacingTitle</td>
+                                                        <td>
+                                                            @if (Model.CompanyId == (int)CompanyName.GloriousLandsAndDevelopmentsLimited)
+                                                            {
+
+                                                                <span>
+                                                                    @(((ProductStatusEnumGLDL)item.Status).ToString())
+                                                                </span>
+                                                            }
+                                                            else
+                                                            {
+                                                                <span>
+                                                                    @(((ProductStatusEnumKPL)item.Status).ToString())
+                                                                </span>
+                                                            }
+
+                                                        </td>
                                                         <td>
 
                                                             <a href="/Configuration/ProductPlotOrFlatEdit?ProductId=@item.ID&&productType=@Model.ProductType" class="linkPointer" title="Edit">  <i class="glyphicon glyphicon-edit" aria-hidden="true"></i> </a>

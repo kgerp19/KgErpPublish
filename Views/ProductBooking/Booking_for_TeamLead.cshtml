@@ -110,22 +110,24 @@
                     <td>@item.LandValue</td>
                     <td>@item.RestofAmount</td>
                     <td>
-                        @if (item.Step == 1)
-                        {
-                            <span class="badge badge-primary">Dealing officer</span>
-                        }
+
                         @if (item.Step == 2)
                         {
                             <span class="badge badge-dark" data-toggle="modal" data-target="#exampleModal" onclick="statusevent(@item.BookingId, '@item.CGId')">Head of sales</span>
                         }
+
                         @if (item.Step == 3)
                         {
                             <span class="badge badge-success"> DMD approval</span>
                         }
+
+
                         @if (item.Step == 4)
                         {
                             <span class="badge badge-success"> MD approval</span>
                         }
+
+
                     </td>
                     <td>
                         @if (item.Status == 1)

@@ -82,7 +82,7 @@ function createRowForStock() {
     var isAllValid = true;
 
 
-    if (!($('#VendorId').val().trim() !== '')) {
+    if (!($('#VendorId').val() !== '')) {
         isAllValid = false;
         $('#VendorId').siblings('span.error').css('visibility', 'visible');
     }
@@ -158,13 +158,13 @@ function removecell(id,key){
     buttonVisibility();
 }
 function Editcell(id, key) {
-    if (confirm("Are you sure to remove this ?")) {
+    if (confirm("Are you sure to update this ?")) {
         $('#itemEdit').css('visibility', 'visible');
         $('#itemClose').css('visibility', 'visible');
         $('#add').css('visibility', 'hidden');
         var item=customersList.find(x => x.VendorId == id);
         $('#VendorId').val(item.VendorId);
-         $('#Customer').val(item.VendorName);
+        $('#Customer').val(item.VendorId).change();
         $('#SharePercentage').val(item.SharePercentage);
         //calculateSum();
         //PopulateTableFromArray();
@@ -174,8 +174,8 @@ function Editcell(id, key) {
 
 
 function getSelectedItems() {
-    var vendorId = $('#VendorId').val();
-    var vendorName = $('#Customer').val();
+    var vendorId = $('#Customer').val();
+    var vendorName = $('#Customer :selected').text();
     var qty = $('#SharePercentage').val();
     var psize = $('#txtPlotSize').val();
     var customerlandvalue = ((psize / 100) * qty).toFixed(4);
@@ -217,21 +217,22 @@ function EditItemToGrid() {
 
     var res = createRowForStock();
     if (res) {
-        var vendorId = $('#VendorId').val();
-        var vendorName = $('#Customer').val();
+        var vendorId = $('#Customer').val();
+        var vendorName = $('#Customer :selected').text(); // VendorId
         var qty = $('#SharePercentage').val();
         var psize = $('#txtPlotSize').val();
         var customerlandvalue = ((psize / 100) * qty).toFixed(4);
         var index = customersList.findIndex(x => x.VendorId == vendorId);
         //customersList.splice(customersList.findIndex(x => x.VendorId == vendorId), 1);
-        //console.log(index);
+        console.log("cus",customersList);
+        console.log(index);
         var item = {
             "VendorId": vendorId,
             "VendorName": vendorName,
             "SharePercentage": qty,
             "Customerlandvalue": customerlandvalue
         };
-
+        console.log("ffff",item);
         customersList[index] = item;
         $('#Customer').val('');
         $('#SharePercentage').val('');

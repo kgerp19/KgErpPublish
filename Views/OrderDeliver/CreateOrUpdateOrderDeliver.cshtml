@@ -510,8 +510,6 @@
                         @Html.HiddenFor(model => model.VMOrderDeliverDetail.OrderDeliverId, new { id = "submitOrderDeliverId" })
                         @Html.HiddenFor(model => model.VMOrderDeliverDetail.OrderMasterId, new { id = "submitOrderMasterId" })
                         @Html.HiddenFor(model => model.VMOrderDeliverDetail.VendorId, new { id = "submitVendorId" })
-
-
                         @Html.AntiForgeryToken()
                         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
 

@@ -5,6 +5,9 @@
 }
 
 <style>
+    input, select, textarea {
+        max-width: 100%;
+    }
     .content-header {
         padding: 10px 0.5rem;
     }
@@ -198,13 +201,12 @@
     .card {
         box-shadow: none;
     }
+
     .ui-datepicker-trigger .fa {
         padding: 9px;
         background: #ff9800;
         color: #fff;
     }
-
-
 </style>
 <div class="content-header">
     <div class="container-fluid ">
@@ -225,17 +227,49 @@
     <section class="content-header">
         <div class="">
             <div class="card">
-                <div class="card-header">
-                    <h3 class="card-title">
-                        <i class="fa fa-plus"></i>
-                        Customer Booking
-                    </h3>
+                <div class="card-header" >
+                    <div class="row">
+                        <div class="col-md-10">
+                            <h3 class="card-title">
+                                <i class="fa fa-plus"></i>
+                                Customer Booking
+                            </h3>
+                        </div>
+                        <div class="col-md-2"> <a target="_blank"  class="btn btn-link btn-sm" href="~/Configuration/RSCommonCustomer?companyId=@Model.CompanyId">Add New Customer</a></div>
+                    </div>
+                   
+                   
                 </div>
                 <div class="card-body">
                     <div class="tab-content mt-2 p-0">
                         <div class="row">
                             @Html.HiddenFor(m => m.CompanyId, new { @id = "companyId" })
-                           @*@Html.HiddenFor(m => m.AdvancePercentage, new { @id = "AdvancePercentageId" })*@
+                            @*@Html.HiddenFor(m => m.AdvancePercentage, new { @id = "AdvancePercentageId" })*@
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="control-label col-md-4"> Select Client: <b style="color:red">*</b> </label>
+                                    <div class="col-md-8">
+                                        @Html.EditorFor(model => model.ClientName, new { htmlAttributes = new { @class = "form-control", @name = "ClientName", @id = "ClientNameId", @style = "max-width: 100%;" } })
+                                        @Html.HiddenFor(x => x.ClientId, new { @id = "BookingBy", @name = "ClientId" })
+                                        @Html.ValidationMessageFor(model => model.ClientName, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            <div class="col-md-6">
+                                <div class="form-group mt-2">
+                                    @Html.Label("FileNo", htmlAttributes: new { @class = "control-label col-md-4" })
+                                    <div class="col-md-8">
+                                        @Html.EditorFor(model => model.FileNo, new { htmlAttributes = new { @class = "form-control customStyle", @id = "FileNoId", @autocomplete = "off", @style = "max-width: 100%;" } })
+                                        @Html.ValidationMessageFor(model => model.FileNo, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            @Html.HiddenFor(m => m.CompanyId, new { @id = "companyId" })
+                            @*@Html.HiddenFor(m => m.AdvancePercentage, new { @id = "AdvancePercentageId" })*@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label class="control-label col-md-4"> Group Name <b style="color:red"> *</b> </label>
@@ -246,7 +280,7 @@
                                 </div>
                             </div>
                             <div class="col-md-6">
-                                <div class="form-group">
+                                <div class="form-group mt-2">
                                     @Html.Label("Mobile", htmlAttributes: new { @class = "control-label col-md-4" })
                                     <div class="col-md-8">
                                         @Html.EditorFor(model => model.PrimaryContactNo, new { htmlAttributes = new { @class = "form-control customStyle", @id = "PrimaryContactNoId", @autocomplete = "off", @style = "max-width: 100%;" } })
@@ -326,7 +360,7 @@
                             </div>
                         </div>
                     </div>
-                 
+
                     <div class="row">
 
                         <div class="col-md-6">
@@ -352,7 +386,6 @@
 
 
                     <div class="row">
-
                         <div class="col-md-6">
                             <div class="form-group mt-2">
                                 <label class="control-label col-md-4"> Sales Person <b style="color:red"> *</b> </label>
@@ -416,6 +449,7 @@
                             </div>
                         </div>
                     </div>
+
 
                     <div class="row mt-3" id="hideDive">
                         <div class="bg-div">
@@ -506,105 +540,107 @@
                                 </tr>
                             </tbody>
                         </table>
-
-
-                        <div class="select-Process" style="padding-left:10px;margin-bottom:20px">
-                            <div class="row">
-                                <div class="col-sm-4">
-                                    <div class="form-check">
-                                        <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios2" value="option2" checked>
-                                        <label class="form-check-label" for="exampleRadios2">
-                                            Automatic Process
-                                        </label>
-                                    </div>
+                        <div class="row">
+                            <div class="col-sm-2">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios2" value="option2" checked>
+                                    <label class="form-check-label" for="exampleRadios2">
+                                        Automatic Process
+                                    </label>
                                 </div>
 
-                                <div class="col-sm-4">
-                                    <div class="form-check col-4">
-                                        <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1" value="option1">
-                                        <label class="form-check-label" for="exampleRadios1">
-                                            Manual Process
-                                        </label>
-                                    </div>
+                            </div>
+
+                            <div class="col-sm-2">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1" value="option1">
+                                    <label class="form-check-label" for="exampleRadios1">
+                                        Manual Process
+                                    </label>
                                 </div>
                             </div>
+                            <div class="col-md-8"></div>
                         </div>
 
-                        <div class="Automaticprocessing" style="padding:5px">
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label class="control-label col-md-4"> Installment Type <b style="color:red"> *</b> </label>
-                                        <div class="col-md-8">
-                                            @Html.DropDownListFor(model => model.BookingInstallmentTypeId, new SelectList(Model.BookingInstallmentType, "Value", "Text"), "---Select Booking Installment Type---", new { id = "BookingInstallmentTypeId", @class = "searchingDropdown  customStyle", @style = "width: 100%;" })
-                                            @Html.ValidationMessageFor(model => model.BookingInstallmentTypeId, "", new { @class = "text-danger" })
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="form-group row showmonth">
-                                        <label for="exampleInputEmail1" class="control-label col-md-4">Number of Installment</label>
-                                        <input type="text" value="1" id="NoOfInstallment" class="form-control col-md-8 valid" aria-describedby="NoOfInstallment-error" aria-invalid="false">
-                                    </div>
+                        <div class="row Automaticprocessing">
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label for="message-text" class="col-form-label">Installment Type:</label>
+                                    @Html.DropDownListFor(model => model.BookingInstallmentTypeId, new SelectList(Model.BookingInstallmentType, "Value", "Text"), "---Select Booking Installment Type---", new { id = "BookingInstallmentTypeId", @class = "searchingDropdown  customStyle", @style = "width: 100%;" })
+                                    @Html.ValidationMessageFor(model => model.BookingInstallmentTypeId, "", new { @class = "text-danger" })
                                 </div>
                             </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label for="message-text" class="col-form-label">No. of Installment:</label>
+                                    <input type="text" value="1" id="NoOfInstallment" class="form-control col-md-8 valid" aria-describedby="NoOfInstallment-error" aria-invalid="false">
+
+                                </div>
+                            </div>
+
+
+                            <div class="col-md-6"></div>
                         </div>
 
-
-                        <div class="Menualprocess" style="padding:5px 5px">
-
-                            <div class="row" style="background:#eee">
-                                <div class="col-md-4">
+                        <div class="Menualprocess">
+                            <div class="row">
+                                <div class="col-md-2">
                                     <div class="form-group">
-                                        <label class="control-label"> Installment Type <b style="color:red"> *</b> </label>
-                                        <div class="">
-                                            @Html.DropDownListFor(model => model.BookingInstallmentTypeManualId, new SelectList(Model.BookingInstallmentType, "Value", "Text"), "---Select Booking Installment Type---", new { id = "BookingInstallmentTypeId2", @class = "searchingDropdown  customStyle", @style = "width: 100%;" })
-                                            @Html.ValidationMessageFor(model => model.BookingInstallmentTypeManualId, "", new { @class = "text-danger" })
-                                        </div>
+                                        <label class="control-label">Installment Type<b style="color:red"> *</b> </label>
+                                        @Html.DropDownListFor(model => model.BookingInstallmentTypeManualId, new SelectList(Model.BookingInstallmentType, "Value", "Text"), "---Select Booking Installment Type---", new { id = "BookingInstallmentTypeId2", @class = "searchingDropdown  customStyle", @style = "width: 100%;" })
+                                        @Html.ValidationMessageFor(model => model.BookingInstallmentTypeManualId, "", new { @class = "text-danger" })
                                     </div>
                                 </div>
-                                <div class="col-md-4">
-                                    <div class="form-group  showmonth">
-                                        <label for="NoOfInstallment2" class="control-label">Number of Installment</label>
+                                <div class="col-md-2">
+                                    <div class="form-group">
+                                        <label class="control-label">No. of Installment<b style="color:red"> *</b> </label>
                                         <input type="text" value="1" id="NoOfInstallment2" class="form-control valid" aria-describedby="NoOfInstallment-error" aria-invalid="false">
+
                                     </div>
                                 </div>
-
-                                <div class="col-md-4">
+                                <div class="col-md-2">
                                     <div class="form-group">
-                                        <label for="OneimeAmount" class="control-label">Amount</label>
+                                        <label class="control-label">Amount<b style="color:red"> *</b> </label>
                                         <input type="number" id="OneimeAmount" class="form-control valid" aria-describedby="NoOfInstallment-error" aria-invalid="false">
                                     </div>
                                 </div>
 
-                                <div class="col-md-4">
+
+
+                                <div class="col-md-2">
                                     <div class="form-group">
-                                        <label for="RemainingBalance" class="control-label">Remaining Balance</label>
+                                        <label class="control-label">Remaining Balance </label>
                                         <input type="text" id="RemainingBalance" readonly class="form-control valid" aria-describedby="NoOfInstallment-error" aria-invalid="false">
                                     </div>
                                 </div>
 
-                                <div class="col-md-4">
+                                <div class="col-md-3">
                                     <div class="form-group">
-                                        <label class="control-label"> Booking Date <b style="color:red"> *</b> </label>
-                                        <div class="">
-                                            <div style="display:flex">
-                                                <input type="text"  id="stertistallmentId" value="@Model.ApplicationDateString" class="form-control datepickeronPage" style="max-width: 100%;" />
-                                            </div>
+                                        <label class="control-label">Booking Date<b style="color:red"> *</b> </label>
+                                        <div style="display:flex;">
+                                            <input type="text" id="stertistallmentId" value="@Model.ApplicationDateString" class="form-control datepickeronPage" />
                                         </div>
+                                       
                                     </div>
-                                </div>   
-                                
-                                <div class="col-md-3 mt-4">
-                                    <label class="control-label"> </label>
-                                    <button style="width:100%;margin-top:20px" type="button" onclick="confirmShedul()" data-confirm="Are you sure to submit?" class="btn btn-success d-block pull-right">Submit</button>
                                 </div>
 
+                                <div class="col-md-1">
+                                    <div class="form-group">
+                                        <label class="control-label">&nbsp;</label>
+                                        <div style="display:flex;">
+                                            <button style="width:100%;" type="button" onclick="confirmShedul()" data-confirm="Are you sure to submit?" class="btn btn-success d-block pull-right">Process</button>
+
+                                        </div>
+                                    </div>
+                                </div>
 
                             </div>
+                           
 
                         </div>
+                      
 
+                    
 
                         <div style="margin-top:10px;margin-bottom:20px">
                             <table class="table table-bordered">
@@ -618,36 +654,49 @@
                                     </tr>
                                 </thead>
                                 <tbody id="Installment">
-                                   
                                 </tbody>
                             </table>
                         </div>
 
                         <div class="" style="margin-top:15px">
-                            <table class="table table-responsive">
-                                <tr class="bg-div">
-                                    <th>Customer</th>
-                                    <th>Share Percentage</th>
-                                    <th>Action</th>
-                                </tr>
-                                <tr class="mycontainer" id="mainrow">
-                                    <td width="40%">
-                                        <input type="text" id="Customer" name="Customer" class="form-control" style="width:270px" />
+                            <div class="row">
+
+                                <div class="col-md-5">
+                                    @*<div class="form-group">
+                                        <label for="message-text" class="col-form-label">Customer:</label>
+                                        <input type="text" id="Customer" name="Customer" class="form-control" />
                                         <input type="hidden" id="VendorId" name="VendorId" />
                                         <span class="error">Customer  required</span>
-                                    </td>
-                                    <td width="40%">
+                                    </div>*@
+                                    <div class="form-group">
+                                     <label for="message-text" class="col-form-label">Customer:</label>
+                                     <select id="Customer" name="Customer" class="form-control" >
+
+                                     </select>
+                                        @*<span class="error">Customer  required</span>*@
+                                    </div>
+
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <label for="message-text" class="col-form-label">Share Percentage:</label>
                                         <input type="text" id="SharePercentage" class="qty form-control" autocomplete="off" style="text-align:right" />
                                         <span class="error">Share Percentage required</span>
-                                    </td>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label for="message-text" class="col-form-label">&nbsp;</label>
+                                        <button type="button" id="add" onclick="addItemToGrid()" style="width:100%" class="add btn btn-primary pull-left"><i class="glyphicon glyphicon-plus-sign"></i> Add</button>
+                                        <button type="button" id="itemClose" onclick="CloseItemToGrid()" class="Close btn btn-danger pull-right" style="width:30%;margin-top:-32px">Close <i class="fa fa-close" aria-hidden="true"></i></button>
+                                        <button type="button" id="itemEdit" onclick="EditItemToGrid()" style="width: 70%; margin-top: -32px" class="edit btn btn-warning pull-left"><i class="glyphicon glyphicon-pencil-sign"></i>Update</button>
 
-                                    <td style="display:flex;justify-content:start!important;width:20%">
-                                        <button type="button" id="add" onclick="addItemToGrid()" class=" add  btn btn-primary pull-left"><i class="glyphicon glyphicon-plus-sign"></i> Add</button>
-                                        <button type="button" id="itemClose" onclick="CloseItemToGrid()" class=" Close btn btn-danger pull-right" style="margin-right:15px">Close <i class="fa fa-close" aria-hidden="true"></i></button>
-                                        <button type="button" id="itemEdit" onclick="EditItemToGrid()" class=" edit btn btn-warning pull-left"><i class="glyphicon glyphicon-pencil-sign"></i>Update</button>
-                                    </td>
-                                </tr>
-                            </table>
+                                    </div>
+                                </div>
+
+
+                            </div>
+
                             <div id="orderItems">
                                 <table class="table table-striped" id="orderdetailsItems">
                                     <thead>
@@ -668,11 +717,14 @@
                         </div>
 
                         <div class="row">
-                            <div>
-                                <button onclick="SubmitForm()" data-confirm="Are you sure to submit?" value="Submit" class="btn btn-success pull-right"> Submit </button>
-                                <a @*href="@Url.Action("Index","Demand",new { companyId=Model.CompanyId})"*@ class="btn btn-danger pull-right" style="margin-right:15px">
-                                    Close <i class="fa fa-close" aria-hidden="true"></i>
-                                </a>
+                            <div class="col-md-4">
+
+                            </div>
+                            <div class="col-md-4">
+
+                            </div>
+                            <div class="col-md-4">
+                                <button onclick="SubmitForm()" data-confirm="Are you sure to submit?" value="Submit" style="width:100%" class="btn btn-success pull-right">Save Booking</button>
 
                             </div>
                         </div>
@@ -703,7 +755,91 @@
     </script>
 
     <script type="text/javascript">
+
+
+
+
+
+
         $(document).ready(function () {
+            $("#ClientNameId").autocomplete({
+                source: function (request, response) {
+                    $.ajax({
+                        url: '/ProductBooking/CustomerAutoComplete/',
+                        //data: "{ 'prefix': '" + request.term + "'}",
+                        data: '{"prefix":"' + request.term + '", "companyId":"' +@Model.CompanyId+'"}',
+                        dataType: "json",
+                        type: "POST",
+                        cache: true,
+                        contentType: "application/json; charset=utf-8",
+                        success: function (data) {
+                            response($.map(data, function (item) {
+                                return item;
+                            }))
+                        },
+                        error: function (response) {
+                            alert(response.responseText);
+                        },
+                        failure: function (response) {
+                            alert(response.responseText);
+                        }
+                    });
+                },
+                select: function (e, i) {
+                    $("#BookingBy").val(i.item.val);
+
+                 $.ajax({
+                 type: "GET",
+                  url: "@Url.Action("GetVendorInformation", "ProductBooking")",
+                  datatype: "Json",
+                     data: { companyId: "@Model.CompanyId", vendorId: i.item.val },
+                  success: function (data) {
+                      if (data) {
+                          console.log("hhhh", data);
+                          $("#CustomerGroupNameId").val(data.Name + " & Associated" ); 
+                          $("#PrimaryContactNoId").val(data.Phone); 
+                          $("#PrimaryEmailId").val(data.Email); 
+                          $("#PrimaryContactAddrId").val(data.Address); 
+                          $("#ClientId").val(data.VendorId); 
+                      }
+                  }
+                });
+                  //var vandorId =   $("#ClientId").val();
+                    $.ajax({
+                        url: '/Vendor/CustomerAssociatesCustomerId/',
+                        /*   data: { companyId: "7", prefix: request.term },*/
+                        data: "{ 'customerId': '" + i.item.val + "'}",
+                        dataType: "json",
+                        type: "POST",
+                        contentType: "application/json; charset=utf-8",
+                        success: function (data2) {
+                            console.log("Amar Function" ,data2);
+
+                            if (data2) {
+                                $("#Customer").empty();
+                                $("#Customer").append("<option value=''>==Select Customer ==</option>");
+                                $(data2).each(function (index2, item2) {
+                                    $("#Customer").append("<option value='" + item2.val + "'>" + item2.label + "</option>");
+                                });
+                            }
+                        },
+                        error: function (response) {
+                            alert(response.responseText);
+                        },
+                        failure: function (response) {
+                            alert(response.responseText);
+                        }
+                    });
+                },
+                minLength: 1,
+                cache: true
+
+            }).focus(function () {
+                $(this).autocomplete("search");
+            });
+
+
+
             $('.datepickeronPage').datepicker({
                 dateFormat: 'dd-M-yy',
                 showOn: 'both',
@@ -799,7 +935,7 @@
                 else {
                     document.getElementById('NoOfInstallment').readOnly = false;
                 }
-              
+
             }
 
         });
@@ -837,7 +973,7 @@
                 $('#NoOfInstallment2').val(parseInt(no));
 
             }
-            
+
         });
 
         function confirmShedul() {
@@ -921,7 +1057,7 @@
                     datatype: "Json",
                     data: { conmpanyId:@Model.CompanyId, installmentId: datalist.Value, NoOfInstallment: noOfInstallMent, restofAmount: restofAmountId, BookingDate: bookingDate },
                     success: function (data) {
-                  
+
                         dList.push(...data.LstSchedules);
                         console.log("ffffffffff", dList);
                         InstallmentTotal = 0;
@@ -961,7 +1097,7 @@
 
 
     }
-        
+
         function DateCustom(orderDate) {
             var dateString = orderDate.substr(6);
             var currentTime = new Date(parseInt(dateString));
@@ -1142,15 +1278,15 @@
         function ScheduleAmount (id) {
             var Schedule = document.getElementsByClassName("ScheduleAmount");
             var resAmount = $('#RestofAmountId').val();
-            console.log("Schedule", Schedule);     
+            console.log("Schedule", Schedule);
             InstallmentTotal = 0.0;
-            for (var i = 0; i < Schedule.length; i++) {                
+            for (var i = 0; i < Schedule.length; i++) {
                 if (parseFloat(Schedule[i].value) >= 0) {
-                    InstallmentTotal = parseFloat(InstallmentTotal) + parseFloat(Schedule[i].value);  
+                    InstallmentTotal = parseFloat(InstallmentTotal) + parseFloat(Schedule[i].value);
                 }
                 else {
                     alert("wrong input");
-                }              
+                }
             }
             $('#RemainingBalance').val($("#RestofAmountId").val() - parseFloat(InstallmentTotal));
             if ($('#RemainingBalance').val() < 0) {
@@ -1160,11 +1296,11 @@
                 $('#RemainingBalance').css("background-color", "#eee");
                 for (var i = 0; i < Schedule.length; i++) {
                     $("#" + Schedule[i].id).removeClass("intro");
-                   
+
                 }
             }
             $('#InstallmentTotal').text(InstallmentTotal);
-           
+
         };
         //$("#txtRatePerKatha").change(function () {
         //    var siz = $('#txtPlotSize').val();
@@ -1186,7 +1322,7 @@
             var totalDiscountamt = parseFloat(calculatedDiscount) + parseFloat(SpecialDiscountAmt);
             $('#TotalDiscountAmtId').val(totalDiscountamt);
             var costHeads = document.getElementsByClassName("costHead");
-           
+
 
            // console.log("fffffffffff",Schedule);
             var costTotal = 0.0;

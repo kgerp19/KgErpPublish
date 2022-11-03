@@ -430,6 +430,7 @@
                     url: "@Url.Action("ProcurementPurchaseOrderSlaveData", "WareHouse")",
                     datatype: "Json",
                      data: { poId: i.item.val },
+
                      success: function (data) {
                          console.log(data);
                          $("#procurementPurchaseOrderSlaveData").html(data);

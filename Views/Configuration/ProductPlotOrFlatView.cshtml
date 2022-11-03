@@ -158,11 +158,15 @@
             <th style="width:18%">  Floors</th>
             <th style="width:2%">:</th>
             <td style="width:30%">
-                
+                @foreach (var item in Model.GetList)
+                {
+                    if (Model.realStateProducts.FlatProp.Floors.Where(e => e == item.Value.ToString()).Count() > 0)
+                    {
+                        <span> @item.Text</span>
+                    }
 
-                @string.Join(",", Model.realStateProducts.FlatProp.Floors)
-               
-             </td>
+                }
+            </td>
         </tr>
 
 

@@ -15,15 +15,33 @@
         max-width: 100%;
     }
 </style>
-<section class="content-header">
-    <h1>
-        Block's
-    </h1>
-    <ol class="breadcrumb">
-        <li><a href="~/Home/Index"><i class="fa fa-dashboard"></i>Dashboard</a></li>
-        <li class="active">Block's</li>
-    </ol>
-</section>
+@if (Model.CompanyFK == (int)CompanyName.GloriousLandsAndDevelopmentsLimited)
+{
+    <section class="content-header">
+        <h1>
+            Block's
+        </h1>
+        <ol class="breadcrumb">
+            <li><a href="~/Home/Index"><i class="fa fa-dashboard"></i>Dashboard</a></li>
+            <li class="active">Block's</li>
+        </ol>
+    </section>
+}
+else
+{
+    <section class="content-header">
+        <h1>
+            Floor's
+        </h1>
+        <ol class="breadcrumb">
+            <li><a href="~/Home/Index"><i class="fa fa-dashboard"></i>Dashboard</a></li>
+            <li class="active">Floor's</li>
+        </ol>
+    </section>
+
+}
+
+
 @using (Html.BeginForm("ProductSubCategoryBlock", "Configuration", FormMethod.Post, new { id = "commonProductSubCategoryFormId", @class = "formValidator", onreset = "resetDDL();" }))
 {
     <section class="content">
@@ -35,7 +53,14 @@
                         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
                         <div class="box-danger">
                             <div class="box-header">
-                                <h4>Add Block's</h4>
+                                @if (Model.CompanyFK == (int)CompanyName.GloriousLandsAndDevelopmentsLimited)
+                                {
+                                    <h4>Add Block's</h4>
+                                }
+                                else
+                                {
+                                    <h4>Add Floor's</h4>
+                                }
                             </div>
                             <!-- /.box-header -->
                             <div class="box-body">
@@ -83,7 +108,14 @@
                     <div class="box">
                         <div class="box-danger">
                             <div class="box-header">
-                                <h4>Block's List</h4>
+                                @if (Model.CompanyFK == (int)CompanyName.GloriousLandsAndDevelopmentsLimited)
+                                {
+                                    <h4>Block's List</h4>
+                                }
+                                else
+                                {
+                                    <h4>Floor's List</h4>
+                                }
                             </div>
                             <!-- /.box-header -->
                             <div class="box-body">
@@ -93,7 +125,18 @@
                                             <tr>
                                                 <th>SL</th>
                                                 <th>Project</th>
-                                                <th>Block</th>
+                                                @if (Model.CompanyFK == (int)CompanyName.GloriousLandsAndDevelopmentsLimited)
+                                                {
+
+
+                                                    <th>Block</th>
+                                                }
+                                                else
+                                                {
+                                                    <th>Floor</th>
+
+                                                }
+
                                                 @*<th>Code</th>*@
 
                                                 <th>Action</th>

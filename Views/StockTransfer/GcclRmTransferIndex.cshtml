@@ -77,6 +77,7 @@
                                     </thead>
                                     @{int sl = 0;
                                     }
+                                    <a href="~/Views/StockTransfer/Index.cshtml">~/Views/StockTransfer/Index.cshtml</a>
                                     <tbody>
                                         @foreach (var item in Model.DataList)
                                         {
@@ -98,7 +99,7 @@
                                                     @item.VehicleNo
                                                 </td>
                                                 <td>
-                                                    @if (item.IsReceived>0)
+                                                    @if (item.IsReceived > 0)
                                                     {
                                                         <span class="text-success">Received</span>
                                                     }
@@ -108,7 +109,7 @@
                                                     }
                                                 </td>
                                                 <td>
-                                                    <a href="@Url.Action("StockTransferSlave", "StockTransfer",new {companyId=item.CompanyId, stockTransferId= item.StockTransferId })"><i class="fa fa-edit"></i></a>  
+                                                    <a href="@Url.Action("StockTransferSlave", "StockTransfer",new {companyId=item.CompanyId, stockTransferId= item.StockTransferId })"><i class="fa fa-edit"></i></a>
                                                 </td>
                                                 <td>
                                                     <a href="@Url.Action("GetStockTransferReport","Report",  new {stockTransferId=item.StockTransferId,reportName="StockTransfer",companyId=item.CompanyId})" target="_blank" class="btn btn-primary btn-xs">

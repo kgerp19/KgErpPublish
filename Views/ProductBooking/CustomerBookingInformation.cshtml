@@ -336,12 +336,11 @@
             <th style="width:2%">:</th>
             <td style="width:30%">@Model.BookingNo</td>
 
-            <th style="width:18%;margin-top:5px">
 
-            </th>
-            <th style="width:2%"></th>
-            <td style="width:30%">
-                <a href="/Report/ProductBookingInformation?companyId=@Model.CompanyId&&CGId=@Model.CGId">Print Report</a>
+            <th style="width:18%"> File No</th>
+            <th style="width:2%"> :</th>
+            <td style="width:30%;text-align:left">
+                <a href="/Report/ProductBookingInformation?companyId=@Model.CompanyId&&CGId=@Model.CGId">@Model.FileNo</a>
             </td>
 
 
@@ -834,23 +833,12 @@
         @Html.AntiForgeryToken()
         @Html.HiddenFor(m => m.CompanyId, new { @id = "SCompanyId" })
         @Html.HiddenFor(m => m.CGId, new { @id = "SCGId" })
-        @Html.HiddenFor(m => m.BookingNo, new { @id = "SCGId" })
+        @Html.HiddenFor(m => m.BookingNo, new { @id = "BookingNo" })
+        @Html.HiddenFor(m => m.BookingId, new { @id = "SBookingId" })
+        @Html.HiddenFor(m => m.ProductStatus, new { @id = "ProductStatus" })
 
         <div class="row">
-            <div class="col-md-4">
-                <div class="form-group">
-                    <label>Type</label>
-                    @Html.DropDownListFor(model => model.Accounting_BankOrCashParantId, Model.BankOrCashParantList as SelectList, "==Select Type==", new { id = "ddlAccounting_BankOrCashParantId", @class = "form-control ddlReset", style = "width:100%" })
-                    @Html.ValidationMessageFor(model => model.Accounting_BankOrCashParantId, "", new { @class = "text-danger" })
-                </div>
-            </div>
-            <div class="col-md-5">
-                <div class="form-group">
-                    <label>Bank/Cash</label>
-                    @Html.DropDownListFor(model => model.Accounting_BankOrCashId, Model.BankOrCashGLList as SelectList, "== Select Bank/Cash==", new { id = "ddlAccounting_BankOrCashId", @class = "form-control searchingDropdown", style = "width:100%" })
-                    @Html.ValidationMessageFor(model => model.Accounting_BankOrCashId, "", new { @class = "text-danger" })
-                </div>
-            </div>
+            
             <div class="col-md-3" style="text-align:center;margin-top:0px">
                 <div class="form-group">
                     <label>&nbsp;</label>

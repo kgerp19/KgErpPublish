@@ -93,6 +93,7 @@
         </div>
     </div>
 </section>
+
 <div class="table-responsive col-md-12">
     <table id="KgErpDataTable" style="width:100%; background-color:#ddd;" class="table table-striped">
         <thead>
@@ -168,7 +169,9 @@
                     <a href="/ProductBooking/CustomerBookingInformation?companyId=@item.CompanyId&CGId=@item.CGId" target="_blank" class="btn btn-warning btn-xs">
                         Details
                     </a>
-                    @if (item.IsSubmited)
+
+
+                    @*@if (item.IsSubmited)
                     {
                         <button data-toggle="modal" data-target="#paytypeModal" onclick="Collaction(@item.CGId)" class="btn btn-info btn-xs">
                             Collaction
@@ -179,7 +182,8 @@
                         <button disabled class="btn btn-info btn-xs">
                             Collaction
                         </button>
-                    }
+                    }*@
+
                 </td>
 
                 </tr>
