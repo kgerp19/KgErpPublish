@@ -8,6 +8,7 @@
     input, select, textarea {
         max-width: 100%;
     }
+
     .content-header {
         padding: 10px 0.5rem;
     }
@@ -224,10 +225,11 @@
 {
     @Html.AntiForgeryToken()
     @Html.HiddenFor(x => x.ClientId, new { @id = "ClientId" })
+    @Html.HiddenFor(m => m.CompanyId, new { @id = "companyId" })
     <section class="content-header">
         <div class="">
             <div class="card">
-                <div class="card-header" >
+                <div class="card-header">
                     <div class="row">
                         <div class="col-md-10">
                             <h3 class="card-title">
@@ -235,20 +237,46 @@
                                 Customer Booking
                             </h3>
                         </div>
-                        <div class="col-md-2"> <a target="_blank"  class="btn btn-link btn-sm" href="~/Configuration/RSCommonCustomer?companyId=@Model.CompanyId">Add New Customer</a></div>
+                        <div class="col-md-2"> <a target="_blank" class="btn btn-link btn-sm" href="~/Configuration/RSCommonCustomer?companyId=@Model.CompanyId">Add New Customer</a></div>
                     </div>
-                   
-                   
+
+
                 </div>
                 <div class="card-body">
                     <div class="tab-content mt-2 p-0">
                         <div class="row">
-                            @Html.HiddenFor(m => m.CompanyId, new { @id = "companyId" })
-                            @*@Html.HiddenFor(m => m.AdvancePercentage, new { @id = "AdvancePercentageId" })*@
-                            <div class="col-md-6">
+                            <div class="col-md-3">
                                 <div class="form-group">
-                                    <label class="control-label col-md-4"> Select Client: <b style="color:red">*</b> </label>
-                                    <div class="col-md-8">
+                                    <label class="control-label"> Application Date <b style="color:red"> *</b> </label>
+                                    <div style="display:flex">
+                                        <input type="text" name="ApplicationDateString" id="txtApplicationDate" value="@Model.ApplicationDateString" class="form-control datepickeronPage" />
+                                        @Html.ValidationMessageFor(model => model.ApplicationDate, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label class="control-label"> Booking Date <b style="color:red"> *</b> </label>
+                                    <div style="display:flex">
+                                        <input type="text" name="BookingDateString" id="txtBookingDate" value="@Model.ApplicationDateString" class="form-control datepickeronPage" />
+                                        @Html.ValidationMessageFor(model => model.BookingDateString, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-5">
+                                <div class="form-group">
+                                    <label for="message-text" class="col-form-label">File No:</label>
+                                    @Html.EditorFor(model => model.FileNo, new { htmlAttributes = new { @class = "form-control customStyle", @id = "FileNoId", @autocomplete = "off", @style = "max-width: 100%;" } })
+                                    @Html.ValidationMessageFor(model => model.FileNo, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label class="control-label">Select Customer: <b style="color:red"> *</b> </label>
+                                    <div style="display:flex">
                                         @Html.EditorFor(model => model.ClientName, new { htmlAttributes = new { @class = "form-control", @name = "ClientName", @id = "ClientNameId", @style = "max-width: 100%;" } })
                                         @Html.HiddenFor(x => x.ClientId, new { @id = "BookingBy", @name = "ClientId" })
                                         @Html.ValidationMessageFor(model => model.ClientName, "", new { @class = "text-danger" })
@@ -257,194 +285,112 @@
                             </div>
 
 
-                            <div class="col-md-6">
-                                <div class="form-group mt-2">
-                                    @Html.Label("FileNo", htmlAttributes: new { @class = "control-label col-md-4" })
-                                    <div class="col-md-8">
-                                        @Html.EditorFor(model => model.FileNo, new { htmlAttributes = new { @class = "form-control customStyle", @id = "FileNoId", @autocomplete = "off", @style = "max-width: 100%;" } })
-                                        @Html.ValidationMessageFor(model => model.FileNo, "", new { @class = "text-danger" })
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            @Html.HiddenFor(m => m.CompanyId, new { @id = "companyId" })
-                            @*@Html.HiddenFor(m => m.AdvancePercentage, new { @id = "AdvancePercentageId" })*@
-                            <div class="col-md-6">
+                            <div class="col-md-4">
                                 <div class="form-group">
-                                    <label class="control-label col-md-4"> Group Name <b style="color:red"> *</b> </label>
-                                    <div class="col-md-8">
+                                    <label class="control-label">Customer Group<b style="color:red"> *</b> </label>
+                                    <div style="display:flex">
                                         @Html.EditorFor(model => model.CustomerGroupName, new { htmlAttributes = new { @class = "form-control customStyle", @id = "CustomerGroupNameId", @autocomplete = "off", @style = "max-width: 100%;" } })
                                         @Html.ValidationMessageFor(model => model.CustomerGroupName, "", new { @class = "text-danger" })
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-md-6">
-                                <div class="form-group mt-2">
-                                    @Html.Label("Mobile", htmlAttributes: new { @class = "control-label col-md-4" })
-                                    <div class="col-md-8">
+                            <div class="col-md-2">
+                                <div class="form-group">
+                                    <label class="control-label"> Mobile No<b style="color:red"> </b> </label>
+                                    <div style="display:flex">
                                         @Html.EditorFor(model => model.PrimaryContactNo, new { htmlAttributes = new { @class = "form-control customStyle", @id = "PrimaryContactNoId", @autocomplete = "off", @style = "max-width: 100%;" } })
                                         @Html.ValidationMessageFor(model => model.PrimaryContactNo, "", new { @class = "text-danger" })
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                    </div>
-
-                    <div class="row">
-
-                        <div class="col-md-6">
-                            <div class="form-group mt-2">
-                                @Html.Label(" Email", htmlAttributes: new { @class = "control-label col-md-4" })
-                                <div class="col-md-8">
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label for="message-text" class="col-form-label">Email:</label>
                                     @Html.EditorFor(model => model.PrimaryEmail, new { htmlAttributes = new { @class = "form-control customStyle", @id = "PrimaryEmailId", @autocomplete = "off", @style = "max-width: 100%;" } })
                                     @Html.ValidationMessageFor(model => model.PrimaryEmail, "", new { @class = "text-danger" })
                                 </div>
                             </div>
                         </div>
-                        <div class="col-md-6">
-                            <div class="form-group mt-2">
-                                @Html.Label(" Address", htmlAttributes: new { @class = "control-label col-md-4" })
-                                <div class="col-md-8">
-                                    @Html.EditorFor(model => model.PrimaryContactAddr, new { htmlAttributes = new { @class = "form-control customStyle", @id = "PrimaryContactAddrId", @row = "3", @autocomplete = "off", @style = "max-width: 100%;" } })
-                                    @Html.ValidationMessageFor(model => model.PrimaryContactAddr, "", new { @class = "text-danger" })
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label class="control-label">Address<b style="color:red"> </b> </label>
+                                    <div style="display:flex">
+                                        @Html.TextAreaFor(model => model.PrimaryContactAddr, new { id = "PrimaryContactAddrId", @class = "form-control customStyle", @placeholder = "Address" })
+                                        @Html.ValidationMessageFor(model => model.PrimaryContactAddr, "", new { @class = "text-danger" })
+                                    </div>
                                 </div>
                             </div>
+
                         </div>
-
-                    </div>
-
-                    <div class="row">
-                        <div class="col-md-6">
-                            <div class="form-group mt-2">
-                                <label class="control-label col-md-4"> Project <b style="color:red"> *</b> </label>
-                                <div class="col-md-8">
-                                    @Html.DropDownListFor(model => model.ProductCategoryId, new SelectList(Model.ProductCategoryList, "Value", "Text"), "---Select Project---", new { id = "ddlCommon_ProductCategoryFk", @class = "searchingDropdown  customStyle", @style = "width: 100%;" })
-                                    @Html.ValidationMessageFor(model => model.ProductCategoryId, "", new { @class = "text-danger" })
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label class="control-label">Project<b style="color:red"> *</b> </label>
+                                    <div style="display:flex">
+                                        @Html.DropDownListFor(model => model.ProductCategoryId, new SelectList(Model.ProductCategoryList, "Value", "Text"), "---Select Project---", new { id = "ddlCommon_ProductCategoryFk", @class = "searchingDropdown  customStyle", @style = "width: 100%;" })
+                                        @Html.ValidationMessageFor(model => model.ProductCategoryId, "", new { @class = "text-danger" })
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-
-                        <div class="col-md-6">
-                            <div class="form-group mt-2">
-                                <label class="control-label col-md-4"> Block <b style="color:red"> *</b> </label>
-                                <div class="col-md-8">
-                                    @Html.DropDownListFor(model => model.ProductSubCategoryId, Model.ProductSubCategoryList as SelectList, "---Select Block---", new { id = "ddlCommonProductSubCategoryFk", @class = "searchingDropdown  customStyle", @style = "width: 100%;" })
-                                    @Html.ValidationMessageFor(model => model.ProductSubCategoryId, "", new { @class = "text-danger" })
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label class="control-label">Block<b style="color:red"> </b> </label>
+                                    <div style="display:flex">
+                                        @Html.DropDownListFor(model => model.ProductSubCategoryId, Model.ProductSubCategoryList as SelectList, "---Select Block---", new { id = "ddlCommonProductSubCategoryFk", @class = "searchingDropdown  customStyle", @style = "width: 100%;" })
+                                        @Html.ValidationMessageFor(model => model.ProductSubCategoryId, "", new { @class = "text-danger" })
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-
-                    </div>
-
-                    <div class="row">
-
-                        <div class="col-md-6">
-                            <div class="form-group mt-2">
-                                <label class="control-label col-md-4"> Plot <b style="color:red"> *</b> </label>
-                                <div class="col-md-8">
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label class="control-label">Plot<b style="color:red"> *</b> </label>
                                     @Html.DropDownListFor(model => model.ProductId, Model.ProductList as SelectList, "---Select Plot---", new { id = "ddlCommonProductFk", @class = "searchingDropdown  customStyle", @style = "width: 100%;" })
                                     @Html.ValidationMessageFor(model => model.ProductId, "", new { @class = "text-danger" })
                                 </div>
                             </div>
                         </div>
-
-                        <div class="col-md-6">
-                            <div class="form-group mt-2">
-
-                                @Html.Label("Plot No", htmlAttributes: new { @class = "control-label col-md-4" })
-                                <div class="col-md-8">
-                                    @Html.EditorFor(model => model.PlotNo, new { htmlAttributes = new { @id = "txtPlotNo", @readonly = "readonly", @class = "form-control", @style = "max-width: 100%;" } })
-                                    @Html.ValidationMessageFor(model => model.PlotNo, "", new { @class = "text-danger" })
+                        <div class="row">
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label class="control-label">Plot Size </label>
+                                    <div style="display:flex">
+                                        @Html.EditorFor(model => model.PlotSize, new { htmlAttributes = new { @id = "txtPlotSize", @readonly = "readonly", @class = "form-control", @style = "max-width: 100%;" } })
+                                        @Html.ValidationMessageFor(model => model.PlotSize, "", new { @class = "text-danger" })
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                    </div>
-
-                    <div class="row">
-
-                        <div class="col-md-6">
-                            <div class="form-group mt-2">
-                                @Html.Label("Plot Size", htmlAttributes: new { @class = "control-label col-md-4" })
-                                <div class="col-md-8">
-                                    @Html.EditorFor(model => model.PlotSize, new { htmlAttributes = new { @id = "txtPlotSize", @readonly = "readonly", @class = "form-control", @style = "max-width: 100%;" } })
-                                    @Html.ValidationMessageFor(model => model.PlotSize, "", new { @class = "text-danger" })
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label class="control-label">Rate Per<span class="ClassUnitName"></span> <b style="color:red"> *</b> </label>
+                                    <div style="display:flex">
+                                        @Html.EditorFor(model => model.RatePerKatha, new { htmlAttributes = new { @id = "txtRatePerKatha", @class = "form-control", @style = "max-width: 100%;" } })
+                                        @Html.ValidationMessageFor(model => model.RatePerKatha, "", new { @class = "text-danger" })
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-
-                        <div class="col-md-6">
-                            <div class="form-group mt-2">
-                                <label class="control-label col-md-4"> Rate Per <span class="ClassUnitName"></span> <b style="color:red"> *</b> </label>
-                                <div class="col-md-8">
-                                    @Html.EditorFor(model => model.RatePerKatha, new { htmlAttributes = new { @id = "txtRatePerKatha", @class = "form-control", @style = "max-width: 100%;" } })
-                                    @Html.ValidationMessageFor(model => model.RatePerKatha, "", new { @class = "text-danger" })
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-
-                    <div class="row">
-                        <div class="col-md-6">
-                            <div class="form-group mt-2">
-                                <label class="control-label col-md-4"> Sales Person <b style="color:red"> *</b> </label>
-                                <div class="col-md-8">
-
-                                    <select id="ddlCommon_EmployeeId" name="EmployeeId" class="searchingDropdown  customStyle" , style="width: 100%;">
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label class="control-label"> Sales Person <b style="color:red"> *</b> </label>
+                                    <select id="ddlCommon_EmployeeId" name="EmployeeId" required class="form-control" , style="width: 100%;">
                                         <option>---Select Sales Person---</option>
                                         @foreach (var item in Model.Employee.Where(e => e.IsLeader == false).ToList())
                                         {
                                             <option value="@item.EmployeeId">@item.EmployeeName [@item.StrEmpId]</option>
                                         }
                                     </select>
-                                    @*@Html.DropDownListFor(model => model.EmployeeId, new SelectList(Model.Employee, "Value", "Text"), "---Select Sales Person---", new { id = "ddlCommon_EmployeeId", @class = "searchingDropdown  customStyle", @style = "width: 100%;" })*@
                                     @Html.ValidationMessageFor(model => model.EmployeeId, "", new { @class = "text-danger" })
                                 </div>
                             </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="form-group mt-2">
-                                <label class="control-label col-md-4"> Team Lead <b style="color:red"> *</b> </label>
-                                <div class="col-md-8">
-                                    @Html.HiddenFor(m => m.TeamLeadId, new { id = "TeamLeadId" })
-                                    <input readonly id="TeamLeadName" value="" class="form-control" style="width: 100%;" />
-
-                                    @*@Html.DropDownListFor(model => model.EmployeeId, new SelectList(Model.Employee, "Value", "Text"), "---Select Sales Person---", new { id = "ddlCommon_EmployeeId", @class = "searchingDropdown  customStyle", @style = "width: 100%;" })*@
-                                    @Html.ValidationMessageFor(model => model.TeamLeadId, "", new { @class = "text-danger" })
-                                </div>
-                            </div>
-                        </div>
-
-
-
-                        <div class="col-md-6">
-                            <div class="form-group mt-2">
-                                <label class="control-label col-md-4"> Application Date <b style="color:red"> *</b> </label>
-                                <div class="col-md-8">
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label class="control-label"> Team Lead <b style="color:red"> *</b> </label>
                                     <div style="display:flex">
-                                        @*@Html.EditorFor(model => model.ApplicationDate, new { htmlAttributes = new { @id = "txtApplicationData", @type = "date", @class = "datepickeronPage form-control", @style = "max-width: 100%;", @onchange = "getDemandNo()" } })*@
-                                        <input type="text" name="ApplicationDateString" id="txtApplicationDate" value="@Model.ApplicationDateString" class="form-control datepickeronPage" style="max-width: 100%;" />
-                                        @*@Html.TextBoxFor(model => model.ApplicationDate, "{0:dd/MM/yyyy}", new { @id = "txtApplicationData",@type="date", @class = "form-control", @style = "max-width: 100%;" })*@
+                                        @Html.HiddenFor(m => m.TeamLeadId, new { id = "TeamLeadId" })
+                                        <input readonly id="TeamLeadName" value="" class="form-control" style="width: 100%;" />
 
-                                        @*@Html.ValidationMessageFor(model => model.ApplicationDate, "", new { @class = "text-danger" })*@
+                                        @Html.ValidationMessageFor(model => model.TeamLeadId, "", new { @class = "text-danger" })
                                     </div>
-
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="form-group mt-2">
-                                <label class="control-label col-md-4"> Booking Date <b style="color:red"> *</b> </label>
-                                <div class="col-md-8">
-                                    <div style="display:flex">
-                                        @*@Html.EditorFor(model => model.ApplicationDate, new { htmlAttributes = new { @id = "txtApplicationData", @type = "date", @class = "datepickeronPage form-control", @style = "max-width: 100%;", @onchange = "getDemandNo()" } })*@
-                                        <input type="text" name="BookingDateString" id="txtBookingDate" value="@Model.ApplicationDateString" class="form-control datepickeronPage" style="max-width: 100%;" />
-                                        @*@Html.TextBoxFor(model => model.ApplicationDate, "{0:dd/MM/yyyy}", new { @id = "txtApplicationData",@type="date", @class = "form-control", @style = "max-width: 100%;" })*@
-
-                                        @*@Html.ValidationMessageFor(model => model.ApplicationDate, "", new { @class = "text-danger" })*@
-                                    </div>
-
                                 </div>
                             </div>
                         </div>
@@ -462,18 +408,25 @@
                                 <tr>
                                     <th>Sl</th>
                                     <th>Cost Head</th>
+                                    @*<td>In Percentage</td>*@
                                     <th>Amount</th>
+                                    <td>Installment Include</td>
                                 </tr>
                             </thead>
 
 
                             <tbody>
                                 <tr>
-                                    <td> 1</td>
+                                    <th>1</th>
                                     <td> Land Value </td>
+                                    @*<td>&nbsp;</td>*@
                                     <td>
-                                        @Html.EditorFor(model => Model.LandValue, new { htmlAttributes = new { id = "LandValueId", @class = "form-control", @style = "max-width: 100%;" } })
+                                        @Html.EditorFor(model => Model.LandValue, new { htmlAttributes = new { id = "LandValueId", @readonly= "readonly", @class = "form-control", @style = "max-width: 100%;" } })
                                     </td>
+                                    <td>
+                                        &nbsp;
+                                    </td>
+
                                 </tr>
 
                                 @{int sl = 1; }
@@ -482,10 +435,16 @@
                                     <tr>
                                         <th>@(++sl) </th>
                                         <td>@Model.LstPurchaseCostHeads[i].CostName</td>
+                                        @*<td>
+                    @Html.EditorFor(model => Model.LstPurchaseCostHeads[i].Percentage, new { htmlAttributes = new { @class = "form-control costHead", @style = "max-width: 100%;" } })
+                </td>*@
                                         <td>
                                             @Html.HiddenFor(model => Model.LstPurchaseCostHeads[i].CostId)
                                             @Html.EditorFor(model => Model.LstPurchaseCostHeads[i].Amount, new { htmlAttributes = new { @class = "form-control costHead", @style = "max-width: 100%;" } })
-
+                                            <input type="hidden" id="costValue"/>
+                                        </td>
+                                        <td class="text-center">
+                                            @Html.CheckBoxFor(model => Model.LstPurchaseCostHeads[i].IsSnstallmentInclude, new { @onclick = "GetSnstallmentableValue(" + i + ")" })
                                         </td>
                                     </tr>
                                 }
@@ -497,7 +456,8 @@
 
                                 </tr>
                                 <tr>
-                                    <td> Discount (Land Value)</td>
+
+                                    <td class="text-right"> Discount (Land Value)</td>
                                     <td style="display:flex; ">
                                         @Html.EditorFor(model => Model.Discount, new { htmlAttributes = new { id = "DiscountId", @class = "form-control", @style = "max-width: 80%; " } })
                                         <span style="margin:7px 0px 0px 5px">%</span>
@@ -526,7 +486,8 @@
                                     <td> @Html.EditorFor(model => Model.GrandTotalAmount, new { htmlAttributes = new { id = "GrandTotalAmountId", @readonly = "readonly", @class = "form-control", @style = "max-width: 100%;" } }) </td>
                                 </tr>
                                 <tr class="text-left">
-                                    <td> Booking Money </td>
+
+                                    <td>  Booking Money </td>
                                     <td style="display:flex; ">  @Html.EditorFor(model => Model.AdvancePercentage, new { htmlAttributes = new { id = "AdvancePercentageId", @class = "form-control", @style = "max-width: 80%; " } })  <span style="margin:7px 0px 0px 5px">%</span> </td>
 
                                     <td> @Html.EditorFor(model => Model.BookingMoney, new { htmlAttributes = new { id = "BookingMoneyId", @class = "form-control", @style = "max-width: 100%;" } }) </td>
@@ -537,6 +498,12 @@
                                         <b>Rest of Amount </b>
                                     </td>
                                     <td> @Html.EditorFor(model => Model.RestofAmount, new { htmlAttributes = new { id = "RestofAmountId", @readonly = "readonly", @class = "form-control", @style = "max-width: 100%;" } }) </td>
+                                </tr>
+                                <tr class="text-right">
+                                    <td colspan="2">
+                                        <b>Installment Amount </b>
+                                    </td>
+                                    <td> @Html.EditorFor(model => Model.InstallmentAmount, new { htmlAttributes = new { id = "txtInstallmentAmount", @readonly = "readonly", @class = "form-control", @style = "max-width: 100%;" } }) </td>
                                 </tr>
                             </tbody>
                         </table>
@@ -620,7 +587,7 @@
                                         <div style="display:flex;">
                                             <input type="text" id="stertistallmentId" value="@Model.ApplicationDateString" class="form-control datepickeronPage" />
                                         </div>
-                                       
+
                                     </div>
                                 </div>
 
@@ -635,12 +602,12 @@
                                 </div>
 
                             </div>
-                           
+
 
                         </div>
-                      
 
-                    
+
+
 
                         <div style="margin-top:10px;margin-bottom:20px">
                             <table class="table table-bordered">
@@ -663,16 +630,15 @@
 
                                 <div class="col-md-5">
                                     @*<div class="form-group">
-                                        <label for="message-text" class="col-form-label">Customer:</label>
-                                        <input type="text" id="Customer" name="Customer" class="form-control" />
-                                        <input type="hidden" id="VendorId" name="VendorId" />
-                                        <span class="error">Customer  required</span>
-                                    </div>*@
+                                            <label for="message-text" class="col-form-label">Customer:</label>
+                                            <input type="text" id="Customer" name="Customer" class="form-control" />
+                                            <input type="hidden" id="VendorId" name="VendorId" />
+                                            <span class="error">Customer  required</span>
+                                        </div>*@
                                     <div class="form-group">
-                                     <label for="message-text" class="col-form-label">Customer:</label>
-                                     <select id="Customer" name="Customer" class="form-control" >
-
-                                     </select>
+                                        <label for="message-text" class="col-form-label">Customer:</label>
+                                        <select id="Customer" name="Customer" class="form-control">
+                                        </select>
                                         @*<span class="error">Customer  required</span>*@
                                     </div>
 
@@ -755,8 +721,32 @@
     </script>
 
     <script type="text/javascript">
+        let costvalue = 0;
+        let vv = 0;
+        function GetSnstallmentableValue(sl) {
+            
+            var rowId = "LstPurchaseCostHeads_" + sl + "__Amount"
+            var  rowVal = $("#" + rowId).val();
+            
+            var LandValue = $("#LandValueId").val();
+            var checkboxId = "LstPurchaseCostHeads_" + sl + "__IsSnstallmentInclude";
 
+            if ($("#" + checkboxId).prop('checked') == true) {
 
+                costvalue = Number(costvalue) + Number(rowVal);
+
+            }
+            else {
+                costvalue = Number(costvalue) - Number(rowVal);
+            }
+            $("#costValue").val(costvalue);
+            var tnstallmentAmount = Number(LandValue) + Number(costvalue);
+            var landDiscountId = $("#TotalDiscountId").val();
+            var specialDiscountAmtId = $("#SpecialDiscountAmtId").val();
+            var totalDiscount = Number(landDiscountId) + Number(specialDiscountAmtId);
+            $("#txtInstallmentAmount").val(Number(tnstallmentAmount) - Number(totalDiscount));
+            CalculateAll();
+        }
 
 
 
@@ -796,11 +786,11 @@
                   success: function (data) {
                       if (data) {
                           console.log("hhhh", data);
-                          $("#CustomerGroupNameId").val(data.Name + " & Associated" ); 
-                          $("#PrimaryContactNoId").val(data.Phone); 
-                          $("#PrimaryEmailId").val(data.Email); 
-                          $("#PrimaryContactAddrId").val(data.Address); 
-                          $("#ClientId").val(data.VendorId); 
+                          $("#CustomerGroupNameId").val(data.Name + " & Associated" );
+                          $("#PrimaryContactNoId").val(data.Phone);
+                          $("#PrimaryEmailId").val(data.Email);
+                          $("#PrimaryContactAddrId").val(data.Address);
+                          $("#ClientId").val(data.VendorId);
                       }
                   }
                 });
@@ -885,7 +875,7 @@
                 $("#select2-BookingInstallmentTypeId2-container").text("---Select Booking Installment Type---");
                 $("#BookingInstallmentTypeId2").val("");
                 InstallmentTotal = 0.0;
-                $('#RemainingBalance').val($("#RestofAmountId").val());
+                $('#RemainingBalance').val($("#txtInstallmentAmount").val());
                 dList = [];
             }
             else {
@@ -895,7 +885,9 @@
                 $("#select2-BookingInstallmentTypeId-container").text("---Select Booking Installment Type---");
                 $("#BookingInstallmentTypeId").val("");
                 InstallmentTotal = 0.0;
-                $('#RemainingBalance').val($("#RestofAmountId").val());
+                var res=$("#txtInstallmentAmount").val();
+                $('#RemainingBalance').val(res);
+                $('#OneimeAmount').val(0);
                 dList = [];
             }
         }
@@ -978,7 +970,7 @@
 
         function confirmShedul() {
             var onetime = parseFloat($('#OneimeAmount').val());
-            var res = $("#RestofAmountId").val() - parseFloat(InstallmentTotal);
+            var res = $("#txtInstallmentAmount").val() - parseFloat(InstallmentTotal);
             if (parseFloat(res) >= onetime) {
                 onlode();
             }
@@ -992,7 +984,8 @@
             if (selectProcess == 1 || selectProcess == 0) {
                 var typeid = $('#BookingInstallmentTypeId').val();
                 var datalist = installmentType.find(d => d.Value == parseFloat(typeid));
-                var restofAmountId = $("#RestofAmountId").val();
+               /* var restofAmountId = $("#RestofAmountId").val();*/
+                var restofAmountId = $("#txtInstallmentAmount").val();
                 var noOfInstallMent = $("#NoOfInstallment").val();
                 var bookingDate = $("#txtBookingDate").val();
                 if (bookingDate == null || bookingDate == undefined) {
@@ -1083,7 +1076,7 @@
                             //$('#Installment').empty();
                             $('#Installment').html(tag);
 
-                            $('#RemainingBalance').val($("#RestofAmountId").val() - parseFloat(InstallmentTotal.toFixed(2)));
+                            $('#RemainingBalance').val($("#txtInstallmentAmount").val() - parseFloat(InstallmentTotal.toFixed(2)));
                             rebuildDatePicker();
                         }
                     },
@@ -1288,7 +1281,7 @@
                     alert("wrong input");
                 }
             }
-            $('#RemainingBalance').val($("#RestofAmountId").val() - parseFloat(InstallmentTotal));
+            $('#RemainingBalance').val($("#txtInstallmentAmount").val() - parseFloat(InstallmentTotal));
             if ($('#RemainingBalance').val() < 0) {
                 $('#RemainingBalance').css("background-color", "#fdbbbb");
                 $("#" + id + "Schedule").addClass("intro");
@@ -1326,23 +1319,31 @@
 
            // console.log("fffffffffff",Schedule);
             var costTotal = 0.0;
-
+            costvalue = 0;
             for (var i = 0; i < costHeads.length; i++) {
+                var checkboxId = "LstPurchaseCostHeads_" + i + "__IsSnstallmentInclude";
+
+                if ($("#" + checkboxId).prop('checked') == true) {
+                    costvalue = costvalue + Number(costHeads[i].value);
+                } 
+
                 costTotal = parseFloat(costTotal) + parseFloat(costHeads[i].value);
             }
             var total = parseFloat(LandValue) + parseFloat(costTotal);
             var grandTotal = parseFloat(total) - parseFloat(totalDiscountamt);
-
+            var tnstallmentAmount = Number(LandValue - totalDiscountamt) + Number(costvalue);
+            $("#txtInstallmentAmount").val(tnstallmentAmount);
             //var advanceAmount = ((parseFloat(grandTotal) / 100) * parseFloat(AdvancePercentage));
             //var Percentage = ((parseFloat(grandTotal) / parseFloat(AdvancePercentage)) *100);
             var advanceAmount = $("#BookingMoneyId").val();
             var RestOfAmount = (parseFloat(grandTotal) - parseFloat(advanceAmount));
+          
             $('#TotalAmountId').val(total);
             $('#GrandTotalAmountId').val(grandTotal);
             $('#BookingMoneyId').val(advanceAmount);
             $('#RestofAmountId').val(RestOfAmount);
             //$('#AdvancePercentageId').val(Percentage);
-
+            $("#txtInstallmentAmount").val(tnstallmentAmount - advanceAmount);
             var id = $('#BookingInstallmentTypeId').val();
             //var onetime = $('#OneimeAmount').val();
             ////console.log("fffffff",id);
@@ -1355,7 +1356,9 @@
                 onlode();
             }
 
-            $('#RemainingBalance').val(RestOfAmount - InstallmentTotal);
+       
+            $('#RemainingBalance').val(RestOfAmount - $("#txtInstallmentAmount").val());
+            onlodehidesho();
         }
 
 

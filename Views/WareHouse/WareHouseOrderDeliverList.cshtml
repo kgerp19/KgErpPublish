@@ -47,7 +47,7 @@
                                         <th>Order Date</th>
 
                                         <th>Customer</th>
-
+                                        <th>Status</th>
                                         <th>Detail</th>
 
                                     </tr>
@@ -64,7 +64,15 @@
                                         <td>@item.OrderNo</td>
                                         <td>@item.OrderDate.ToString("dd-MM-yyyy")</td>
                                         <td>@item.CustomerName</td>
-
+                                        <td>
+                                            @if (item.IsSubmitted)
+                                            {
+                                                  <span>Submitted</span>
+                                            }
+                                            else
+                                            {                                                 <span>Pending</span>
+                                            }
+                                        </td>
                                         <td>
                                             @if (item.CompanyFK == (int)CompanyName.GloriousCropCareLimited)
                                             {

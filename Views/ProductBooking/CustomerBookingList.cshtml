@@ -63,18 +63,18 @@
 
     .content-header {
         position: relative;
-        padding: 0px 15px 20px 5px;
+        padding: 5px 15px 5px 5px;
         background-color: #4caf5029 !important;
     }
 </style>
 <section class="content-header" style="margin-bottom:20px">
     <div class="row">
         <div class="col-sm-3">
-            <h3>
+            <b style="font-size:20px">
                 Customer Booking List
-            </h3>
+            </b>
         </div>
-        <div class="col-sm-9" style="margin-top:29px;">
+        @*<div class="col-sm-9" style="margin-top:29px;">
             @using (Html.BeginForm("CustomerBookingPassUrl", "ProductBooking", FormMethod.Post))
             {
                 @Html.HiddenFor(m => m.CompanyId, new { @id = "companyId" })
@@ -90,7 +90,7 @@
                     </div>
                 </div>
             }
-        </div>
+        </div>*@
     </div>
 </section>
 

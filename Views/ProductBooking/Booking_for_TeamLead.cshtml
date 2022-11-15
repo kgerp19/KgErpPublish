@@ -140,9 +140,13 @@
                         }
                         @if (item.Status == 3)
                         {
+                    <span class="badge badge-success">Approve</span>
+                        } 
+                        @if (item.Status == 4)
+                        {
                             <span class="badge badge-success">Approve</span>
                         }
-                        @if (item.Status == 4)
+                        @if (item.Status == 5)
                         {
                             <span class="badge badge-danger">Reject</span>
                         }
@@ -183,7 +187,7 @@
                         <label for="exampleFormControlSelect1">Select Status</label>
                         <select class="form-control" name="Status" id="Status">
                             <option value="3">Approve</option>
-                            <option value="4">Reject</option>
+                            <option value="5">Reject</option>
                         </select>
                     </div>
 

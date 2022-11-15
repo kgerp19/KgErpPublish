@@ -244,9 +244,9 @@
 
                                     <div class="col-md-6">
                                         <div class="form-group row" style="padding:0px">
-                                            <label for="message-text" class=" col-sm-4 col-form-label">Code :  <span style="color:red">*</span>  </label>
+                                            <label for="message-text" class=" col-sm-4 col-form-label">Code :    </label>
                                             <div class="col-sm-8">
-                                                @Html.TextBoxFor(model => model.ProductCode, new { id = "textverandahCount", @class = "form-control", @placeholder = "Code", required = "required" })
+                                                @Html.TextBoxFor(model => model.ProductCode, new { id = "textverandahCount", @class = "form-control", @placeholder = "Code",})
                                                 @Html.ValidationMessageFor(model => model.ProductCode, "", new { @class = "text-danger" })
                                             </div>
                                         </div>
@@ -536,9 +536,9 @@ else
 
                                     <div class="col-md-3">
                                         <div class="form-group row" style="padding:0px">
-                                            <label for="message-text" class=" col-sm-4 col-form-label">Code :  <span style="color:red">*</span>  </label>
+                                            <label for="message-text" class=" col-sm-4 col-form-label">Code :</label>
                                             <div class="col-sm-8">
-                                                @Html.TextBoxFor(model => model.ProductCode, new { id = "textverandahCount", @class = "form-control", @placeholder = "Code", required = "required" })
+                                                @Html.TextBoxFor(model => model.ProductCode, new { id = "textverandahCount", @class = "form-control", @placeholder = "Code"})
                                                 @Html.ValidationMessageFor(model => model.ProductCode, "", new { @class = "text-danger" })
                                             </div>
                                         </div>

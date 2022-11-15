@@ -46,7 +46,7 @@
                                         <th>Remarks</th>
 
                                         <th>Created By</th>
-
+                                        <th>Status</th>
                                         <th>Detail</th>
 
                                     </tr>
@@ -63,6 +63,17 @@
 
                                         <td>@item.CreatedBy</td>
                                         <td>@item.Remarks</td>
+                                        <td>
+                                            @if (item.IsFinalized)
+                                        {
+
+                                             <span>Submitted</span>
+                                        }
+                                        else
+                                        {
+                                            <span>pending</span>
+                                        }
+                                        </td>
 
                                         <td>
                                             @if (item.CompanyFK == (int)CompanyName.GloriousCropCareLimited)

@@ -783,7 +783,7 @@
         {
             <b> @Model.approval.EntryName </b><br />
             <b> @Model.approval.EntryDesignation </b> <br />
-            <b> @(Model.approval.EntryDate.HasValue?@Model.approval.EntryDate.Value.ToString("dd-MMM-yyyy"):"") </b>
+            <b> @(Model.approval.EntryDate.HasValue?@Model.CreatedDate.ToString("dd-MMM-yyyy"):"") </b>
         }
     </div>
     <div class="col-sm-3">
@@ -803,7 +803,7 @@
         @if (Model.approval.ApprovedBy != null)
         {
             <b>@Model.approval.ApproveName  </b><br />
-            <b> @Model.approval.ApprovedDesignation </b><br />
+            <b> @Model.approval.ApprovedDesignation </b> <br />
             <b> @(Model.approval.ApproveDate.HasValue?@Model.approval.ApproveDate.Value.ToString("dd-MMM-yyyy"):"") </b>
         }
 
@@ -814,8 +814,8 @@
 
         @if (Model.approval.FinalApproverBy != null)
         {
-            <b>@Model.approval.FinalApproveName</b>
-            <b> @Model.approval.FinalApproverDesignation </b>
+            <b>@Model.approval.FinalApproveName</b> <br />
+            <b> @Model.approval.FinalApproverDesignation </b> <br />
             <b> @(Model.approval.FinalApvDate.HasValue?@Model.approval.FinalApvDate.Value.ToString("dd-MMM-yyyy"):"") </b>
         }
 
@@ -826,7 +826,7 @@
     <b> Submission Aria </b>
 </div>
 
-@if (Model.IsShow && Model.IsSubmited == false)
+@if (Model.IsSubmited == false)
 {
     using (Html.BeginForm("finalsubmit", "ProductBooking", FormMethod.Post))
     {

@@ -75,22 +75,22 @@
             </h3>
         </div>
         @*<div class="col-sm-8" style="margin-top:29px;">
-            @using (Html.BeginForm("CustomerBookingPassUrl", "ProductBooking", FormMethod.Post))
-            {
-                @Html.HiddenFor(m => m.CompanyId, new { @id = "companyId" })
-                <div style="width:100%" class="row">
-                    @Html.Label("Select Client :", htmlAttributes: new { @class = " col-md-2 control-label" })
-                    <div class="col-md-7">
-                        @Html.EditorFor(model => model.ClientName, new { htmlAttributes = new { @class = "form-control", @name = "ClientName", @id = "ClientNameId" } })
-                        @Html.HiddenFor(x => x.ClientId, new { @id = "BookingBy", @name = "ClientId" })
-                        @Html.ValidationMessageFor(model => model.ClientName, "", new { @class = "text-danger" })
+                @using (Html.BeginForm("CustomerBookingPassUrl", "ProductBooking", FormMethod.Post))
+                {
+                    @Html.HiddenFor(m => m.CompanyId, new { @id = "companyId" })
+                    <div style="width:100%" class="row">
+                        @Html.Label("Select Client :", htmlAttributes: new { @class = " col-md-2 control-label" })
+                        <div class="col-md-7">
+                            @Html.EditorFor(model => model.ClientName, new { htmlAttributes = new { @class = "form-control", @name = "ClientName", @id = "ClientNameId" } })
+                            @Html.HiddenFor(x => x.ClientId, new { @id = "BookingBy", @name = "ClientId" })
+                            @Html.ValidationMessageFor(model => model.ClientName, "", new { @class = "text-danger" })
+                        </div>
+                        <div class="col-sm-3">
+                            <input id="submit" type="submit" data-confirm="Are you sure to submit?" value="New Booking" class="btn btn-success pull-right" />
+                        </div>
                     </div>
-                    <div class="col-sm-3">
-                        <input id="submit" type="submit" data-confirm="Are you sure to submit?" value="New Booking" class="btn btn-success pull-right" />
-                    </div>
-                </div>
-            }
-        </div>*@
+                }
+            </div>*@
     </div>
 </section>
 <div class="table-responsive col-md-12">
@@ -141,7 +141,7 @@
                         }
                         @if (item.Step == 4)
                         {
-                            <span class="badge badge-success"> MD approval</span>
+                            <span class="badge badge-success"> MD Approval</span>
                         }
                     </td>
                     <td>
@@ -158,6 +158,10 @@
                             <span class="badge badge-success">Approve</span>
                         }
                         @if (item.Status == 4)
+                        {
+                            <span class="badge badge-danger"> Final Approve</span>
+                        }
+                        @if (item.Status == 5)
                         {
                             <span class="badge badge-danger">Reject</span>
                         }
@@ -198,7 +202,7 @@
                         <label for="exampleFormControlSelect1">Select Status</label>
                         <select class="form-control" name="Status" id="Status">
                             <option value="2">Approve</option>
-                            <option value="4">Reject</option>
+                            <option value="5">Reject</option>
                         </select>
                     </div>
 

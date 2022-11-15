@@ -12,6 +12,9 @@
     input, select, textarea {
         max-width: 100%;
     }
+    .linkPointe {
+        cursor: pointer;
+    }
 </style>
 
 <section class="content-header">
@@ -134,7 +137,7 @@
                                                     <td>
 
                                                         @Html.Raw(item.Narration)
-                                                        
+
                                                     </td>
                                                     <td>
                                                         @if (item.IsStock)
@@ -146,12 +149,20 @@
                                                             <a href="~/Vouchers/ManageBankOrCash?companyId=@item.CompanyId&voucherId=@item.VoucherId" title="Details"><i class="glyphicon glyphicon-new-window"></i></a>
 
                                                         }
+
                                                         @if (!item.IsIntegrated)
                                                         {
+                                                            if (Model.IsSubmit == true)
+                                                            {
+                                                                <a id="linkUndoSubmit_@item.VoucherId" onclick="makeUndoSubmit(@item.VoucherId,@item.CompanyId)" class="linkPointer text-warning" data-toggle="modal" data-target="#undoSubmitVoucherModal" title="Undo Submit" data-placement="top"><i class="fa fa-undo" aria-hidden="true"></i></a>
+
+                                                            }
+
                                                             <a id="linkVoucherId_@item.VoucherId" onclick="makeDeletale(@item.VoucherId,@item.CompanyId)" style="color:red" class="linkPointer" data-toggle="modal" data-target="#deleteVoucherModal" title="Delete" data-placement="top"><i class="glyphicon glyphicon-trash" aria-hidden="true"></i></a>
 
                                                         }
-                                                        <a href="@Url.Action("GetVoucherReport","Report", new { companyId = item.CompanyId, voucherId = item.VoucherId ,reportName =""})" target="_blank" class="btn btn-primary btn-xs">
+
+                                                        <a href="@Url.Action("GetVoucherReport","Report", new { companyId = item.CompanyId, voucherId = item.VoucherId ,reportName =""})" style="width:100%" target="_blank" class="btn btn-primary btn-xs">
                                                             Print
                                                         </a>
 
@@ -179,6 +190,47 @@
     </div>
 </section>
 
+
+@using (Html.BeginForm("UndoSubmitVoucher", "Vouchers", FormMethod.Post))
+{
+
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    <div class="modal fade" id="undoSubmitVoucherModal" data-toggle="modal" data-backdrop="static" data-keyboard="false" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close pull-right" data-dismiss="modal" aria-label="Close">
+                        &times;
+                    </button>
+                    <h5 class="modal-title"><b>Undo Submit Voucher</b></h5>
+                </div>
+                <div class="modal-body">
+                    @Html.HiddenFor(model => model.VoucherId, new { id = "undoSubmithidVoucherId" })
+                    @Html.HiddenFor(model => model.CompanyId, new { id = "undoSubmitCompanyId" })
+
+
+                    @Html.AntiForgeryToken()
+                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+                    <div style="text-align:center">
+                        <h3>
+                            Are you sure to Undo Submit?.
+                            after completing  this action, you get this voucher under Incomplete List
+                        </h3>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <div class="col-md-3">
+                        <button type="button" class="btn btn-warning fa fa-close" data-dismiss="modal">&nbsp;NO</button>
+                    </div>
+                    <div class="col-md-9">
+                        <button type="submit" id="btnsave" style="width:100%" class="btn btn-primary fa fa-undo">&nbsp; Undo Submit Confirm</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}
 @using (Html.BeginForm("DeleteVoucher", "Vouchers", FormMethod.Post))
 {
 
@@ -234,14 +286,15 @@
             yearRange: "2001:+50"
         });
 
-        function makeDeletale(VoucherId, CompanyId, vvvoucherNo) {
-            var v = vvvoucherNo;
-            console.log(v);
+        function makeDeletale(VoucherId, CompanyId) {           
             $('#deletehidVoucherId').val(VoucherId);
             $('#deleteCompanyId').val(CompanyId);
-
         }
-
+        function makeUndoSubmit(VoucherId, CompanyId) {           
+            $('#undoSubmithidVoucherId').val(VoucherId);
+            $('#undoSubmitCompanyId').val(CompanyId);
+        }
+        
         $(document).ready(function () {
             $('.formValidator').bootstrapValidator();
         });

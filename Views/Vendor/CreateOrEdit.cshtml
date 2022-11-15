@@ -3,7 +3,159 @@
 @{
     ViewBag.Title = "Create";
     Layout = "~/Views/Shared/_Layout.cshtml";
+
+
+
+
 }
+
+<style type="text/css">
+
+    input, select, textarea {
+        max-width: 100%;
+    }
+</style>
+
+<section class="content-header">
+    <h1>
+        @if (Request.QueryString["vendorTypeId"].ToString().Equals("1"))
+        {
+            <span>Supplier</span>
+        }
+        else if (Request.QueryString["vendorTypeId"].ToString().Equals("2"))
+        {
+            <span>
+                Customer
+            </span>
+        }
+        else if (Request.QueryString["vendorTypeId"].ToString().Equals("3"))
+        {
+            <span>
+                Rent Company
+            </span>
+        }
+    </h1>
+    <ol class="breadcrumb">
+        <li><a href="~/Home/Index"><i class="fa fa-dashboard"></i>Dashboard</a></li>
+        <li class="active">Dealer / Customer</li>
+    </ol>
+</section>
+<section class="content">
+    <div class="row">
+        <div class="col-md-12">
+            @using (Html.BeginForm("CreateOrEdit", "Vendor", FormMethod.Post, new { enctype = "multipart/form-data", onsubmit = "return jQueryAjaxPost(this);" }))
+            {
+                @Html.AntiForgeryToken()
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                @Html.AntiForgeryToken()
+                @Html.HiddenFor(x => x.Vendor.Condition)
+                @Html.HiddenFor(x => x.Vendor.CompanyId)
+                <div class="box">
+                    <div class="box-danger">
+                        <!-- /.box-header -->
+                        <div class="box-body">
+                            <div class="row">
+
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label for="message-text" class="col-form-label">Dealer/Customer Name:</label>
+                                        @Html.TextBoxFor(model => model.Name, new { id = "txtCustomerName", @class = "form-control", @placeholder = "Customer Name", required = "required" })
+                                        @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label for="message-text" class="col-form-label">Phone:</label>
+                                        @Html.TextBoxFor(model => model.Phone, new { id = "txtPhone", @class = "form-control", @placeholder = "Contact" })
+                                        @Html.ValidationMessageFor(model => model.Phone, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label for="message-text" class="col-form-label">Email:</label>
+                                        @Html.TextBoxFor(model => model.Email, new { id = "txtEmail", @class = "form-control", @placeholder = "Email" })
+                                        @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+
+
+                            </div>
+                            <div class="row">
+
+
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label for="message-text" class="col-form-label">Division:</label>
+                                        @Html.DropDownListFor(model => model.Common_DivisionFk, Model.DivisionList as SelectList, "--Division--", new { id = "ddlCommon_DivisionFk", @class = "form-control", required = "true" })
+                                        @Html.ValidationMessageFor(model => model.Common_DivisionFk, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label for="message-text" class="col-form-label">District:</label>
+                                        @Html.DropDownListFor(model => model.Common_DistrictsFk, Model.DistrictList as SelectList, "--District--", new { id = "ddlCommon_DistrictsFk", @class = "form-control", required = "true" })
+                                        @Html.ValidationMessageFor(model => model.Common_DistrictsFk, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label for="message-text" class="col-form-label">Upazila:</label>
+                                        @Html.DropDownListFor(model => model.Common_UpazilasFk, Model.UpazilasList as SelectList, "--Upazila--", new { id = "ddlCommon_UpazilasFk", @class = "form-control", required = "true" })
+                                        @Html.ValidationMessageFor(model => model.Common_UpazilasFk, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+
+                            </div>
+
+
+                            <div class="row" style="border-bottom:2px dotted black">
+
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label for="message-text" class="col-form-label">NID NO:</label>
+                                        @Html.TextBoxFor(model => model.NID, new { id = "txtNID", @class = "form-control", @placeholder = "NID NO", required = "required" })
+                                        @Html.ValidationMessageFor(model => model.NID, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+
+                                <div class="col-md-8">
+                                    <div class="form-group">
+                                        <label for="message-text" class="col-form-label">Address:</label>
+                                        @Html.TextAreaFor(model => model.Address, new { id = "txtAddress", @class = "form-control", @placeholder = "Address" })
+                                        @Html.ValidationMessageFor(model => model.Address, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                            </div>
+
+
+
+                            <div class="form-group">
+                                <div class="col-md-3">
+                                    @*<button type="button" onclick="resetForm()" class="btn btn-secondary" data-dismiss="modal">Reset</button>*@
+                                </div>
+                                <div class="col-md-9">
+                                    <button type="submit" id="btnSave" class="btn btn-primary btn-block"><i class='fa fa-plus'></i> Add</button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="box-footer">
+                        </div>
+
+                    </div>
+                </div>
+            }
+
+
+        </div>
+
+    </div>
+</section>
+
+
+
+
+
+
 @using (Html.BeginForm("CreateOrEdit", "Vendor", FormMethod.Post, new { enctype = "multipart/form-data", onsubmit = "return jQueryAjaxPost(this);" }))
 {
     @Html.AntiForgeryToken()

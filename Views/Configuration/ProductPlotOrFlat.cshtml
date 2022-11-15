@@ -68,6 +68,7 @@ Model.CompanyId == (int)CompanyName.KrishibidPropertiesLimited ? "Flat" : "";
                                                     <th>Road No</th>
                                                     <th>Land Facing</th>
                                                     <th>Status</th>
+                                                    <th>Remark</th>
                                                     <th>Action</th>
                                                 </tr>
                                             }
@@ -76,7 +77,7 @@ Model.CompanyId == (int)CompanyName.KrishibidPropertiesLimited ? "Flat" : "";
                                                 <tr>
                                                     <th>SL</th>
                                                     <th>Project - Floor</th>
-                                                    <th>Flat No (Code)</th>
+                                                    <th>Flat No</th>
                                                     <th>Size (Unit)</th>
                                                     <th>Flat Type</th>
                                                     <th>Flat Facing</th>
@@ -94,74 +95,80 @@ Model.CompanyId == (int)CompanyName.KrishibidPropertiesLimited ? "Flat" : "";
                                                 foreach (var item in Model.DataList)
                                                 {
 
-                                                    <tr>
-                                                        <td>@(++sl)</td>
-                                                        <td>@item.CategoryName - @item.SubCategoryName</td>
-                                                        <td>@item.Name - @item.Code</td>
-                                                        <td>@item.PackSize -  @item.UnitName</td>
-                                                        <td>
-                                                            @if (Model.CompanyId == (int)CompanyName.KrishibidPropertiesLimited)
-                                                            {
+                                            <tr>
+                                                <td>@(++sl)</td>
+                                                <td>@item.CategoryName - @item.SubCategoryName</td>
+                                                <td>@item.Name</td>
+                                                <td>@item.PackSize -  @item.UnitName</td>
+                                                <td>
+                                                    @if (Model.CompanyId == (int)CompanyName.KrishibidPropertiesLimited)
+                                                    {
 
-                                                                if (item.FlatProp.IsDuplex)
-                                                                {
-                                                               <span> Duplex Floors</span>
+                                                        if (item.FlatProp.IsDuplex)
+                                                        {
+                                                            <span> Duplex Floors</span>
 
-                                                                    @*if (item.GetList != null)
-                                                                    {
-                                                                        textfor = "";
+                                                            @*if (item.GetList != null)
+                    {
+                        textfor = "";
 
-                                                                        foreach (var item2 in item.GetList)
-                                                                        {
-                                                                            if (item.FlatProp.Floors.Where(e => e == item2.Value.ToString()).Count() > 0)
-                                                                            {
-                                                                                textfor = textfor + item2.Text;
-                                                                            }
-                                                                        }
+                        foreach (var item2 in item.GetList)
+                        {
+                            if (item.FlatProp.Floors.Where(e => e == item2.Value.ToString()).Count() > 0)
+                            {
+                                textfor = textfor + item2.Text;
+                            }
+                        }
 
-                                                                       <span>Duplex Floors : @textfor </span>
-                                                                    }*@
-                                                                }
-                                                                else
-                                                                {
-                                                                    <p>Regular</p>
-                                                                }
+                       <span>Duplex Floors : @textfor </span>
+                    }*@
+                                                        }
+                                                        else
+                                                        {
+                                                            <p>Regular</p>
+                                                        }
 
-                                                            }
-                                                            @if (Model.CompanyId == (int)CompanyName.GloriousLandsAndDevelopmentsLimited)
-                                                            {
+                                                    }
+                                                    @if (Model.CompanyId == (int)CompanyName.GloriousLandsAndDevelopmentsLimited)
+                                                    {
 
-                                                                <p>@item.PlotProp.RoadNo</p>
+                                                        <p>@item.PlotProp.RoadNo</p>
 
-                                                            }
-                                                        </td>
-                                                        <td> @item.FacingTitle</td>
-                                                        <td>
-                                                            @if (Model.CompanyId == (int)CompanyName.GloriousLandsAndDevelopmentsLimited)
-                                                            {
+                                                    }
+                                                </td>
+                                                <td> @item.FacingTitle</td>
+                                                <td>
+                                                    @if (Model.CompanyId == (int)CompanyName.GloriousLandsAndDevelopmentsLimited)
+                                                    {
 
-                                                                <span>
-                                                                    @(((ProductStatusEnumGLDL)item.Status).ToString())
-                                                                </span>
-                                                            }
-                                                            else
-                                                            {
-                                                                <span>
-                                                                    @(((ProductStatusEnumKPL)item.Status).ToString())
-                                                                </span>
-                                                            }
+                                                        <span>
+                                                            @(((ProductStatusEnumGLDL)item.Status).ToString())
+                                                        </span>
+                                                    }
+                                                    else
+                                                    {
+                                                        <span>
+                                                            @(((ProductStatusEnumKPL)item.Status).ToString())
+                                                        </span>
+                                                    }
 
-                                                        </td>
-                                                        <td>
+                                                </td>
+                                                @if (Model.CompanyId == (int)CompanyName.GloriousLandsAndDevelopmentsLimited)
+                                                {
+                                                    <td> @item.Remarks</td>
 
-                                                            <a href="/Configuration/ProductPlotOrFlatEdit?ProductId=@item.ID&&productType=@Model.ProductType" class="linkPointer" title="Edit">  <i class="glyphicon glyphicon-edit" aria-hidden="true"></i> </a>
-                                                            <a id="@item.ID" onclick="makeDeletable(@item.ID, '@Model.CompanyId');" class="linkPointer" data-toggle="modal" data-target="#deleteModal" title="Delete"
-                                                               data-placement="top">
-                                                                <i class="glyphicon glyphicon-trash" aria-hidden="true"></i>
-                                                            </a>
-                                                            <a href="/Configuration/ProductPlotOrFlatView?companyId=@Model.CompanyId&&ProductId=@item.ID" class="linkPointer" title="Edit">  <i class="glyphicon glyphicon-eye-open" aria-hidden="true"></i> </a>
-                                                        </td>
-                                                    </tr>
+                                                }
+
+                                                <td>
+
+                                                    <a href="/Configuration/ProductPlotOrFlatEdit?ProductId=@item.ID&&productType=@Model.ProductType" class="linkPointer" title="Edit">  <i class="glyphicon glyphicon-edit" aria-hidden="true"></i> </a>
+                                                    <a id="@item.ID" onclick="makeDeletable(@item.ID, '@Model.CompanyId');" class="linkPointer" data-toggle="modal" data-target="#deleteModal" title="Delete"
+                                                       data-placement="top">
+                                                        <i class="glyphicon glyphicon-trash" aria-hidden="true"></i>
+                                                    </a>
+                                                    <a href="/Configuration/ProductPlotOrFlatView?companyId=@Model.CompanyId&&ProductId=@item.ID" class="linkPointer" title="Edit">  <i class="glyphicon glyphicon-eye-open" aria-hidden="true"></i> </a>
+                                                </td>
+                                            </tr>
                                                 }
                                             }
 
